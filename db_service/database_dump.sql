@@ -9,12 +9,13 @@ CREATE TABLE products (
 	instruction_manual varchar NULL,
 	description varchar NULL,
 	last_modified timestamp NOT NULL,
+	last_modified_category timestamp NOT NULL,
 	CONSTRAINT products_pk PRIMARY KEY (id)
 );
 
-INSERT INTO products ("name", instruction_manual, description, last_modified) VALUES('T-shirt', 'Take a t-shirt. Put your arms through the sleeves, and your head through the neck part. Congratulations! You are wearing a t-shirt', 'This is an object that people wear. It is used for covering some of your body parts like your arms, stomach, and chest.', NOW());
-INSERT INTO products ("name", instruction_manual, description, last_modified) VALUES('Table tennis net', 'Take this net and put both of the ends on two poles. Congratulations, you now have table tennis net that is ready to be used.', 'Table tennis net implements one of the most important rules in tennis. Without this object tennis matches would not be possible to play.', NOW());
-INSERT INTO products ("name", instruction_manual, description, last_modified) VALUES('Chicken nuggets', 'Take a chiken nugget. Eat it. Congratulations, you are not hungry anymore!', 'This is the food that is going to fulfill all of your wildest tasty fantasies. All you need to do is love chicken nuggets, in order for you to like this food.', NOW());
+INSERT INTO products ("name", instruction_manual, description, last_modified, last_modified_category) VALUES('T-shirt', 'Take a t-shirt. Put your arms through the sleeves, and your head through the neck part. Congratulations! You are wearing a t-shirt', 'This is an object that people wear. It is used for covering some of your body parts like your arms, stomach, and chest.', NOW(), NOW());
+INSERT INTO products ("name", instruction_manual, description, last_modified, last_modified_category) VALUES('Table tennis net', 'Take this net and put both of the ends on two poles. Congratulations, you now have table tennis net that is ready to be used.', 'Table tennis net implements one of the most important rules in tennis. Without this object tennis matches would not be possible to play.', NOW(), NOW());
+INSERT INTO products ("name", instruction_manual, description, last_modified, last_modified_category) VALUES('Chicken nuggets', 'Take a chiken nugget. Eat it. Congratulations, you are not hungry anymore!', 'This is the food that is going to fulfill all of your wildest tasty fantasies. All you need to do is love chicken nuggets, in order for you to like this food.', NOW(), NOW());
 
 
 -- Creating table 'categories'
