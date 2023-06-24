@@ -8,12 +8,13 @@ CREATE TABLE products (
 	"name" varchar NOT NULL,
 	instruction_manual varchar NULL,
 	description varchar NULL,
+	last_modified timestamp NOT NULL,
 	CONSTRAINT products_pk PRIMARY KEY (id)
 );
 
-INSERT INTO products (id, "name", instruction_manual, description) VALUES(1, 'T-shirt', 'Take a t-shirt. Put your arms through the sleeves, and your head through the neck part. Congratulations! You are wearing a t-shirt', 'This is an object that people wear. It is used for covering some of your body parts like your arms, stomach, and chest.');
-INSERT INTO products (id, "name", instruction_manual, description) VALUES(2, 'Table tennis net', 'Take this net and put both of the ends on two poles. Congratulations, you now have table tennis net that is ready to be used.', 'Table tennis net implements one of the most important rules in tennis. Without this object tennis matches would not be possible to play.');
-INSERT INTO products (id, "name", instruction_manual, description) VALUES(3, 'Chicken nuggets', 'Take a chiken nugget. Eat it. Congratulations, you are not hungry anymore!', 'This is the food that is going to fulfill all of your wildest tasty fantasies. All you need to do is love chicken nuggets, in order for you to like this food.');
+INSERT INTO products ("name", instruction_manual, description, last_modified) VALUES('T-shirt', 'Take a t-shirt. Put your arms through the sleeves, and your head through the neck part. Congratulations! You are wearing a t-shirt', 'This is an object that people wear. It is used for covering some of your body parts like your arms, stomach, and chest.', NOW());
+INSERT INTO products ("name", instruction_manual, description, last_modified) VALUES('Table tennis net', 'Take this net and put both of the ends on two poles. Congratulations, you now have table tennis net that is ready to be used.', 'Table tennis net implements one of the most important rules in tennis. Without this object tennis matches would not be possible to play.', NOW());
+INSERT INTO products ("name", instruction_manual, description, last_modified) VALUES('Chicken nuggets', 'Take a chiken nugget. Eat it. Congratulations, you are not hungry anymore!', 'This is the food that is going to fulfill all of your wildest tasty fantasies. All you need to do is love chicken nuggets, in order for you to like this food.', NOW());
 
 
 -- Creating table 'categories'
@@ -27,11 +28,11 @@ CREATE TABLE categories (
 	CONSTRAINT categories_pk PRIMARY KEY (id)
 );
 
-INSERT INTO categories (id, "name", description) VALUES(1, 'clothes', 'This is the category for all kinds of clothes');
-INSERT INTO categories (id, "name", description) VALUES(2, 'food', 'This is the category for all kinds of foods');
-INSERT INTO categories (id, "name", description) VALUES(3, 'meat', 'These are the foods that are only meats.');
-INSERT INTO categories (id, "name", description) VALUES(4, 'sports', 'This is the category for sport requisites');
-INSERT INTO categories (id, "name", description) VALUES(5, 'tennis', 'This is the category for tennis requisites.');
+INSERT INTO categories ("name", description) VALUES('clothes', 'This is the category for all kinds of clothes');
+INSERT INTO categories ("name", description) VALUES('food', 'This is the category for all kinds of foods');
+INSERT INTO categories ("name", description) VALUES('meat', 'These are the foods that are only meats.');
+INSERT INTO categories ("name", description) VALUES('sports', 'This is the category for sport requisites');
+INSERT INTO categories ("name", description) VALUES('tennis', 'This is the category for tennis requisites.');
 
 
 -- many-to-many products_categories
@@ -68,6 +69,7 @@ CREATE TABLE skus (
 	quantityinstock int4 NOT NULL,
 	"size" varchar NULL,
 	details varchar NULL,
+	last_modified timestamp NOT NULL,
 	CONSTRAINT skus_pk PRIMARY KEY (id),
 	CONSTRAINT skus_un UNIQUE (skucode)
 );
@@ -75,11 +77,11 @@ CREATE TABLE skus (
 ALTER TABLE skus ADD CONSTRAINT skus_fk FOREIGN KEY (product_id) REFERENCES products(id);
 
 
-INSERT INTO skus (id, product_id, skucode, color, weight, countryoforigin, price, quantityinstock, "size", details) VALUES(1, 1, 'code1', 'red', 0.2, 'Bosnia and Herzegovina', 10.0, 15, 'medium', 'details1');
-INSERT INTO skus (id, product_id, skucode, color, weight, countryoforigin, price, quantityinstock, "size", details) VALUES(2, 1, 'code2', 'blue', 0.2, 'Macedonia', 10.0, 20, 'large', 'details2');
-INSERT INTO skus (id, product_id, skucode, color, weight, countryoforigin, price, quantityinstock, "size", details) VALUES(3, 2, 'code3', 'white', 1.0, 'Spain', 100.0, 23, 'small', 'details3');
-INSERT INTO skus (id, product_id, skucode, color, weight, countryoforigin, price, quantityinstock, "size", details) VALUES(4, 2, 'code4', 'blue', 1.0, 'Croatia', 110.0, 32, 'medium', 'details4');
-INSERT INTO skus (id, product_id, skucode, color, weight, countryoforigin, price, quantityinstock, "size", details) VALUES(5, 3, 'code5', 'orange', 0.5, 'Nigeria', 5.0, 10, 'large', 'details5');
+INSERT INTO skus (product_id, skucode, color, weight, countryoforigin, price, quantityinstock, "size", details, last_modified) VALUES(1, 'code1', 'red', 0.2, 'Bosnia and Herzegovina', 10.0, 15, 'medium', 'details1', NOW());
+INSERT INTO skus (product_id, skucode, color, weight, countryoforigin, price, quantityinstock, "size", details, last_modified) VALUES(1, 'code2', 'blue', 0.2, 'Macedonia', 10.0, 20, 'large', 'details2', NOW());
+INSERT INTO skus (product_id, skucode, color, weight, countryoforigin, price, quantityinstock, "size", details, last_modified) VALUES(2, 'code3', 'white', 1.0, 'Spain', 100.0, 23, 'small', 'details3', NOW());
+INSERT INTO skus (product_id, skucode, color, weight, countryoforigin, price, quantityinstock, "size", details, last_modified) VALUES(2, 'code4', 'blue', 1.0, 'Croatia', 110.0, 32, 'medium', 'details4', NOW());
+INSERT INTO skus (product_id, skucode, color, weight, countryoforigin, price, quantityinstock, "size", details, last_modified) VALUES(3, 'code5', 'orange', 0.5, 'Nigeria', 5.0, 10, 'large', 'details5', NOW());
 
 --users
 
@@ -95,6 +97,7 @@ CREATE TABLE users (
 	user_type varchar NULL,
 	access_token varchar NULL,
 	refresh_token varchar NULL,
+	last_modified timestamp NOT NULL,
 	CONSTRAINT username_un UNIQUE (username),
 	CONSTRAINT users_pk PRIMARY KEY (id),
 	CONSTRAINT users_un UNIQUE (email)
