@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import { fileURLToPath } from 'url';
 import path from 'path';
 import PostgresDatabase from "./database/postgresHandler.js";
+import bodyParser from "body-parser";
 
 import productRouter from './routes/productRoutes.js';
 import categoryRouter from './routes/categoryRoutes.js';
@@ -17,7 +18,11 @@ PostgresDatabase.createDatabase('development');
 const app: Express = express();
 
 
-//middleware && routes
+//middleware 
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
+//routes
 app.use('/products', productRouter);
 app.use('/categories', categoryRouter);
 
