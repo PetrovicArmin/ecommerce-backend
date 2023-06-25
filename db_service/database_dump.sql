@@ -114,7 +114,7 @@ CREATE TABLE product_changes_log (
 	id serial4 NOT NULL,
 	product_id int4 NOT NULL,
 	changed_by_user_id int4 NOT NULL,
-	change_type varchar NULL,
+	change_type varchar NOT NULL,
 	change_date_time timestamp NOT NULL,
 	CONSTRAINT product_changes_log_pk PRIMARY KEY (id)
 );
