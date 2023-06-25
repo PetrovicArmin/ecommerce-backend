@@ -6,9 +6,10 @@ import { Category } from '../models/categories.js';
 import { Sku } from '../models/skus.js';
 import { User } from '../models/users.js';
 import { ProductLog } from '../models/productChangesLog.js';
+import { SkuLog } from '../models/skuChangesLog.js';
 
 export const readProducts: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-    const result: ProductLog[] = ProductLog.createBatch(await PostgresDatabase.db.ProductLogs.findAll());
+    const result: SkuLog[] = SkuLog.createBatch(await PostgresDatabase.db.SkuLogs.findAll());
     console.log(result);
     res.status(200).json(result);
 };

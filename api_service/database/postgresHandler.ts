@@ -6,6 +6,7 @@ import { categoryMetaData } from "../models/categories.js";
 import { skuMetaData } from "../models/skus.js";
 import { usersMetaData } from "../models/users.js";
 import { productLogMetaData } from "../models/productChangesLog.js";
+import { skuLogMetaData } from "../models/skuChangesLog.js";
 
 class PostgresDatabase {
     #sequelize: Sequelize;
@@ -36,6 +37,7 @@ class PostgresDatabase {
             skuMetaData,
             usersMetaData,
             productLogMetaData,
+            skuLogMetaData
         ];
 
         for (const modelData of metaData)
@@ -76,6 +78,10 @@ class PostgresDatabase {
         return this.#sequelize.models.ProductLog;
     }
 
+    get SkuLogs(): ModelStatic<Model<any,any>> {
+        return this.#sequelize.models.SkuLog;
+    }
+    
     static createDatabase(type: string): PostgresDatabase {
         if (this.#database != undefined)
             return this.#database;

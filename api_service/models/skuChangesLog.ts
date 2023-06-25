@@ -10,13 +10,13 @@ const attributes: ModelAttributes = {
             isInt: true
         }   
     },
-    productId: {
+    skuId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
             isInt: true
         },
-        field: 'product_id'
+        field: 'sku_id'
     },
     changedByUserId: {
         type: DataTypes.INTEGER,
@@ -38,35 +38,35 @@ const attributes: ModelAttributes = {
 
 const options: ModelOptions = {
     timestamps: false,
-    tableName: 'product_changes_log',
+    tableName: 'sku_changes_log',
 }
 
-export const productLogMetaData: ModelData = {
-    modelName: 'ProductLog',
+export const skuLogMetaData: ModelData = {
+    modelName: 'SkuLog',
     attributes: attributes,
     options: options
 };
 
-export class ProductLog {
+export class SkuLog {
     #id: number;
-    #productId: number;
+    #skuId: number;
     #changedByUserId: number;
     #changeType: number;
     #changeDateTime: Date;
 
     constructor(productObject: any) {
         this.#id = productObject.id ;
-        this.#productId = productObject.productId;
+        this.#skuId = productObject.skuId;
         this.#changedByUserId = productObject.changedByUserId;
         this.#changeType = productObject.changeType;
         this.#changeDateTime = productObject.changeDateTime;
     }
 
-    get productLogResponse() {
+    get skuLogResponse() {
         return {
-            "productLog": {
+            "skuLog": {
                 id: this.#id,
-                productId: this.#productId,
+                skuId: this.#skuId,
                 changedByUserId: this.#changedByUserId,
                 changeType: this.#changeType,
                 changeDateTime: this.#changeDateTime
@@ -79,11 +79,11 @@ export class ProductLog {
         return [];
     }
 
-    static createBatch(array: any[]): ProductLog[] {
-        let batch: ProductLog[] = [];
+    static createBatch(array: any[]): SkuLog[] {
+        let batch: SkuLog[] = [];
 
         for (let object of array)
-            batch.push(new ProductLog(object));
+            batch.push(new SkuLog(object));
 
         return batch;
     }
