@@ -5,6 +5,7 @@ import path from 'path';
 import PostgresDatabase from "./database/postgresHandler.js";
 
 import productRouter from './routes/productRoutes.js';
+import categoryRouter from './routes/categoryRoutes.js';
 
 const __filename: string = fileURLToPath(import.meta.url);
 const __dirname: string = path.dirname(__filename);
@@ -18,7 +19,7 @@ const app: Express = express();
 
 //middleware && routes
 app.use('/products', productRouter);
-
+app.use('/categories', categoryRouter);
 
 const port: number = 8080; 
 app.listen(port, () => {
