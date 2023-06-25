@@ -7,6 +7,7 @@ import { skuMetaData } from "../models/skus.js";
 import { usersMetaData } from "../models/users.js";
 import { productLogMetaData } from "../models/productChangesLog.js";
 import { skuLogMetaData } from "../models/skuChangesLog.js";
+import { inventoryLogMetaData } from "../models/inventoryChangesLog.js";
 
 class PostgresDatabase {
     #sequelize: Sequelize;
@@ -16,20 +17,20 @@ class PostgresDatabase {
     private constructor(connection: string) {
         this.#sequelize = new Sequelize(connection);
 
-        this.testConnection()
+        this.connect()
             .then(async _ => {
                 console.log('Connection established successfully!');
-                await this.configureModels();
-                await this.configureAssociations();
+                this.configureModels();
+                await this.#sequelize.sync();
             })
             .catch(err => console.log('Unable to connect to database: ', err));
     }
 
-    private async testConnection(): Promise<any> {
+    private async connect(): Promise<any> {
         return this.#sequelize.authenticate();
     }
 
-    private async configureModels() {
+    private configureModels() {
         const metaData: ModelData[] = [
             productMetaData,
             productsCategoriesMetaData,
@@ -37,7 +38,8 @@ class PostgresDatabase {
             skuMetaData,
             usersMetaData,
             productLogMetaData,
-            skuLogMetaData
+            skuLogMetaData,
+            inventoryLogMetaData
         ];
 
         for (const modelData of metaData)
@@ -46,12 +48,36 @@ class PostgresDatabase {
                 modelData.attributes,
                 modelData.options
             )
+                
+        //associations
 
-        await this.#sequelize.sync();
-    }
+        this.Products.hasMany(this.Skus, { foreignKey: 'product_id' });
+        this.Skus.belongsTo(this.Products);
+        
+        this.Products.hasMany(this.ProductLogs, { foreignKey: 'product_id' });
+        this.ProductLogs.belongsTo(this.Products);
+        
+        this.Products.belongsToMany(this.Categories, { through: this.ProductsCategories });
+        this.Categories.belongsToMany(this.Products, { through: this.ProductsCategories });
 
-    private async configureAssociations() {
 
+
+        this.Skus.hasMany(this.SkuLogs, { foreignKey: 'sku_id' });
+        this.SkuLogs.belongsTo(this.Skus);
+
+        this.Skus.hasMany(this.InventoryLogs, { foreignKey: 'sku_id' });
+        this.InventoryLogs.belongsTo(this.Skus);
+
+
+
+        this.Users.hasMany(this.ProductLogs, { foreignKey: 'changed_by_user_id' })
+        this.ProductLogs.belongsTo(this.Users);
+
+        this.Users.hasMany(this.SkuLogs, { foreignKey: 'changed_by_user_id' })
+        this.SkuLogs.belongsTo(this.Users);
+
+        this.Users.hasMany(this.InventoryLogs, { foreignKey: 'changed_by_user_id' })
+        this.InventoryLogs.belongsTo(this.Users);
     }
 
     get Products(): ModelStatic<Model<any,any>> {
@@ -80,6 +106,10 @@ class PostgresDatabase {
 
     get SkuLogs(): ModelStatic<Model<any,any>> {
         return this.#sequelize.models.SkuLog;
+    }
+
+    get InventoryLogs(): ModelStatic<Model<any,any>> {
+        return this.#sequelize.models.InventoryLog;
     }
     
     static createDatabase(type: string): PostgresDatabase {
