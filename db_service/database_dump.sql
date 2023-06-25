@@ -62,27 +62,27 @@ DROP TABLE IF EXISTS skus;
 CREATE TABLE skus (
 	id serial4 NOT NULL,
 	product_id int4 NOT NULL,
-	skucode varchar NOT NULL,
+	sku_code varchar NOT NULL,
 	color varchar NULL,
 	weight float4 NULL,
-	countryoforigin varchar NULL,
+	country_of_origin varchar NULL,
 	price float4 NOT NULL,
-	quantityinstock int4 NOT NULL,
+	quantity_in_stock int4 NOT NULL,
 	"size" varchar NULL,
 	details varchar NULL,
 	last_modified timestamp NOT NULL,
 	CONSTRAINT skus_pk PRIMARY KEY (id),
-	CONSTRAINT skus_un UNIQUE (skucode)
+	CONSTRAINT skus_un UNIQUE (sku_code)
 );
 
 ALTER TABLE skus ADD CONSTRAINT skus_fk FOREIGN KEY (product_id) REFERENCES products(id);
 
 
-INSERT INTO skus (product_id, skucode, color, weight, countryoforigin, price, quantityinstock, "size", details, last_modified) VALUES(1, 'code1', 'red', 0.2, 'Bosnia and Herzegovina', 10.0, 15, 'medium', 'details1', NOW());
-INSERT INTO skus (product_id, skucode, color, weight, countryoforigin, price, quantityinstock, "size", details, last_modified) VALUES(1, 'code2', 'blue', 0.2, 'Macedonia', 10.0, 20, 'large', 'details2', NOW());
-INSERT INTO skus (product_id, skucode, color, weight, countryoforigin, price, quantityinstock, "size", details, last_modified) VALUES(2, 'code3', 'white', 1.0, 'Spain', 100.0, 23, 'small', 'details3', NOW());
-INSERT INTO skus (product_id, skucode, color, weight, countryoforigin, price, quantityinstock, "size", details, last_modified) VALUES(2, 'code4', 'blue', 1.0, 'Croatia', 110.0, 32, 'medium', 'details4', NOW());
-INSERT INTO skus (product_id, skucode, color, weight, countryoforigin, price, quantityinstock, "size", details, last_modified) VALUES(3, 'code5', 'orange', 0.5, 'Nigeria', 5.0, 10, 'large', 'details5', NOW());
+INSERT INTO skus (product_id, sku_code, color, weight, country_of_origin, price, quantity_in_stock, "size", details, last_modified) VALUES(1, 'code1', 'red', 0.2, 'Bosnia and Herzegovina', 10.0, 15, 'medium', 'details1', NOW());
+INSERT INTO skus (product_id, sku_code, color, weight, country_of_origin, price, quantity_in_stock, "size", details, last_modified) VALUES(1, 'code2', 'blue', 0.2, 'Macedonia', 10.0, 20, 'large', 'details2', NOW());
+INSERT INTO skus (product_id, sku_code, color, weight, country_of_origin, price, quantity_in_stock, "size", details, last_modified) VALUES(2, 'code3', 'white', 1.0, 'Spain', 100.0, 23, 'small', 'details3', NOW());
+INSERT INTO skus (product_id, sku_code, color, weight, country_of_origin, price, quantity_in_stock, "size", details, last_modified) VALUES(2, 'code4', 'blue', 1.0, 'Croatia', 110.0, 32, 'medium', 'details4', NOW());
+INSERT INTO skus (product_id, sku_code, color, weight, country_of_origin, price, quantity_in_stock, "size", details, last_modified) VALUES(3, 'code5', 'orange', 0.5, 'Nigeria', 5.0, 10, 'large', 'details5', NOW());
 
 --users
 
