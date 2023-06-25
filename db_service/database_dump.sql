@@ -26,6 +26,7 @@ CREATE TABLE categories (
 	id serial4 NOT NULL,
 	"name" varchar NOT NULL,
 	description varchar NULL,
+	CONSTRAINT name_uq UNIQUE ("name"),
 	CONSTRAINT categories_pk PRIMARY KEY (id)
 );
 
