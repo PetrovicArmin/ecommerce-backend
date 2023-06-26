@@ -34,12 +34,12 @@ export const productsCategoriesMetaData: ModelData = {
 };
 
 export class ProductCategory {
-    #productId: number;
-    #categoryId: number;
+    productId: number;
+    categoryId: number;
 
     constructor(productObject: any) {
-        this.#productId = productObject.productId;
-        this.#categoryId = productObject.categoryId;
+        this.productId = productObject.productId;
+        this.categoryId = productObject.categoryId;
     }
 
     static createBatch(array: any[]): ProductCategory[] {

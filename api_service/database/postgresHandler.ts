@@ -112,7 +112,7 @@ class PostgresDatabase {
         return this.#sequelize.models.InventoryLog;
     }
 
-    async existsUser(userId: number): Promise<boolean> {
+    async existsProduct(userId: number): Promise<boolean> {
         return (await this.Products.count({ where: { id: userId } })) != 0;    
     }
 

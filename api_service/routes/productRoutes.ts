@@ -16,4 +16,8 @@ router.delete('/:id', productController.deleteProduct);
 
 router.post('/:id/categories', productController.addCategories);
 
+router.get('/:id/categories', productController.readCategories);
+
+router.delete('/:id/categories', productController.deleteCategories);
+
 export default router;
