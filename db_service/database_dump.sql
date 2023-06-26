@@ -10,6 +10,7 @@ CREATE TABLE products (
 	description varchar NULL,
 	last_modified timestamp NOT NULL,
 	last_modified_category timestamp NOT NULL,
+	CONSTRAINT name_uq UNIQUE ("name"),
 	CONSTRAINT products_pk PRIMARY KEY (id)
 );
 
