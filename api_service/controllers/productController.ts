@@ -1,7 +1,7 @@
 import {Request, Response, NextFunction, RequestHandler} from 'express';
 import PostgresDatabase from '../database/postgresHandler.js';
 import { Product } from '../models/products.js';
-import { timeStamp } from 'console';
+import { Op } from 'sequelize';
 
 export const readProducts: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -140,4 +140,40 @@ export const deleteProduct: RequestHandler = async (req: Request, res: Response,
         res.status(400).json(err);
     }
 }
+
+export const addCategories: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        if (!await PostgresDatabase.db.existsUser(+req.params.id))
+            res.status(404).json({
+                message: `Resource 'product' with id of ${req.params.id} does not exist`
+            })
+        else if (!await PostgresDatabase.db.allCategoriesExist(req.body.categoryIds))
+            res.status(404).json({
+                message: `Some of the categories sent in body do not exist`
+            })
+        else {
+            await PostgresDatabase.db.ProductsCategories.bulkCreate(req.body.categoryIds.map((categoryId: number) => {
+                return {
+                    productId: req.params.id,
+                    categoryId: categoryId
+                }
+            }))
+            
+            const now = new Date();
+
+            await PostgresDatabase.db.Products.update({
+                lastModifiedCategory: now
+            }, { where: { id: req.params.id } });
+
+            res.setHeader('Last-Modified', now.toUTCString());
+            
+            res.status(200).json({
+                message: `Successfully added resource 'categories' to product with id ${req.params.id}`
+            })
+        }
+    } catch(err) {
+        res.status(400).json(err);
+    }
+}
+
 

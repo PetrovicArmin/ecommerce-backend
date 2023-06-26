@@ -1,4 +1,4 @@
-import { Model, ModelStatic, Sequelize } from "sequelize";
+import { Model, ModelStatic, Op, Sequelize } from "sequelize";
 import { productMetaData }  from "../models/products.js";
 import ModelData from "../models/modelData.js";
 import { productsCategoriesMetaData } from "../models/productsCategories.js";
@@ -110,6 +110,14 @@ class PostgresDatabase {
 
     get InventoryLogs(): ModelStatic<Model<any,any>> {
         return this.#sequelize.models.InventoryLog;
+    }
+
+    async existsUser(userId: number): Promise<boolean> {
+        return (await this.Products.count({ where: { id: userId } })) != 0;    
+    }
+
+    async allCategoriesExist(categoryIds: number[]): Promise<boolean> {
+        return (await this.Categories.count({ where: { id: { [Op.in]: categoryIds } } })) == categoryIds.length;
     }
     
     static createDatabase(type: string): PostgresDatabase {
