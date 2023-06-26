@@ -13,9 +13,10 @@ const attributes: ModelAttributes = {
     name: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
         validate: {
             len: [3, 10000],
-            is: /[^a-zA-Z\s]+/ //only spaces and letters
+            is: /^[A-Za-z\s]*$/ //only spaces and letters
         }
     },
     instructionManual: {
@@ -69,18 +70,46 @@ export class Product {
 
     get productResponse() {
         return {
-            "product": {
-                id: this.#id,
-                name: this.#name,
-                instructionManual: this.#instructionManual,
-                description: this.#description
-            },
-            "links": this.links
+            id: this.#id,
+            name: this.#name,
+            instructionManual: this.#instructionManual,
+            description: this.#description,
         }
     }
 
-    get links(): string[] {
-        return [];
+    get links(): any[] {
+        return [
+            {
+                "href": `${process.env.API_URL}:${process.env.API_PORT}/products/${this.#id}/categories`,
+                "rel": "categories",
+                "type": "POST"
+            },
+            {
+                "href": `${process.env.API_URL}:${process.env.API_PORT}/products/${this.#id}/categories`,
+                "rel": "categories",
+                "type": "GET"
+            },
+            {
+                "href": `${process.env.API_URL}:${process.env.API_PORT}/products/${this.#id}/categories`,
+                "rel": "categories",
+                "type": "DELETE"
+            },
+            {
+                "href": `${process.env.API_URL}:${process.env.API_PORT}/products/${this.#id}`,
+                "rel": "products",
+                "type": "GET"
+            },
+            {
+                "href": `${process.env.API_URL}:${process.env.API_PORT}/products/${this.#id}`,
+                "rel": "products",
+                "type": "PUT"
+            },
+            {
+                "href": `${process.env.API_URL}:${process.env.API_PORT}/products/${this.#id}`,
+                "rel": "products",
+                "type": "DELETE"
+            }
+        ];
     }
 
     static createBatch(array: any[]): Product[] {

@@ -31,6 +31,7 @@ const attributes: ModelAttributes = {
     email: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
         validate: {
             isEmail: true
         }
@@ -38,6 +39,7 @@ const attributes: ModelAttributes = {
     username: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
         validate: {
             isAlphanumeric: true,
             len: [4, 1000]
