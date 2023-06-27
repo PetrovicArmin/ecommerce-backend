@@ -17,7 +17,7 @@ const updateLastModifiedCategory = async (req: Request, res: Response, now: Date
 export const readProducts: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const products: Product[] = Product.createBatch(
-            await PostgresDatabase.db.Products.findAll()
+            await PostgresDatabase.db.Products.findAll( { where: req.query })
         );
 
         if (products.length == 0)
