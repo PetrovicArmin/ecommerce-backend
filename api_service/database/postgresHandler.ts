@@ -49,35 +49,7 @@ class PostgresDatabase {
                 modelData.options
             )
                 
-        //associations
-
-        this.Products.hasMany(this.Skus, { foreignKey: 'product_id' });
-        this.Skus.belongsTo(this.Products);
-        
-        this.Products.hasMany(this.ProductLogs, { foreignKey: 'product_id' });
-        this.ProductLogs.belongsTo(this.Products);
-        
-        this.Products.belongsToMany(this.Categories, { through: this.ProductsCategories });
-        this.Categories.belongsToMany(this.Products, { through: this.ProductsCategories });
-
-
-
-        this.Skus.hasMany(this.SkuLogs, { foreignKey: 'sku_id' });
-        this.SkuLogs.belongsTo(this.Skus);
-
-        this.Skus.hasMany(this.InventoryLogs, { foreignKey: 'sku_id' });
-        this.InventoryLogs.belongsTo(this.Skus);
-
-
-
-        this.Users.hasMany(this.ProductLogs, { foreignKey: 'changed_by_user_id' })
-        this.ProductLogs.belongsTo(this.Users);
-
-        this.Users.hasMany(this.SkuLogs, { foreignKey: 'changed_by_user_id' })
-        this.SkuLogs.belongsTo(this.Users);
-
-        this.Users.hasMany(this.InventoryLogs, { foreignKey: 'changed_by_user_id' })
-        this.InventoryLogs.belongsTo(this.Users);
+        //put here your associations if needed
     }
 
     get Products(): ModelStatic<Model<any,any>> {

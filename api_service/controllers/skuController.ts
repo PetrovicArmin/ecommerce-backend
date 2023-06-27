@@ -35,7 +35,12 @@ export const readSkus: RequestHandler = async (req: Request, res: Response, next
         }
 
         res.status(200).json({
-            skus: skus.map(sku => sku.skuResponse)
+            skus: skus.map(sku => {
+                return {
+                    sku: sku.skuResponse,
+                    links: sku.links
+                }
+            })
         });
     } catch(err) {
         res.status(400).json(err);

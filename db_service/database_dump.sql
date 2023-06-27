@@ -10,7 +10,7 @@ CREATE TABLE products (
 	description varchar NULL,
 	last_modified timestamp NOT NULL,
 	last_modified_category timestamp NOT NULL,
-	CONSTRAINT name_uq UNIQUE ("name"),
+	CONSTRAINT name_prod_uq UNIQUE ("name"),
 	CONSTRAINT products_pk PRIMARY KEY (id)
 );
 
@@ -27,7 +27,7 @@ CREATE TABLE categories (
 	id serial4 NOT NULL,
 	"name" varchar NOT NULL,
 	description varchar NULL,
-	CONSTRAINT name_uq UNIQUE ("name"),
+	CONSTRAINT name_cat_uq UNIQUE ("name"),
 	CONSTRAINT categories_pk PRIMARY KEY (id)
 );
 
