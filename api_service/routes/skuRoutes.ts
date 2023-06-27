@@ -10,4 +10,8 @@ router.get('/', skuController.readSkus);
 
 router.get('/:id', skuController.readSku);
 
+router.put('/:id', skuController.updateSku);
+
+router.delete('/:id', skuController.deleteSku);
+
 export default router;

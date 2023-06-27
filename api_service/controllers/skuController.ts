@@ -65,3 +65,66 @@ export const readSku: RequestHandler = async (req: Request, res: Response, next:
         res.status(400).json(err);
     }
 };
+
+export const updateSku: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        req.body.lastModified = new Date();
+
+        const result = await PostgresDatabase.db.Skus.update(req.body, { 
+            where: { id: req.params.id }, 
+            returning: true
+        });
+
+        if (result[0] == 0) {
+            res.status(404).json({
+                message: `Resource 'sku' with id of ${req.params.id} does not exist`
+            });
+            return;
+        }
+
+        const sku: Sku = new Sku(result[1][0]);
+
+        res.setHeader('Last-Modified', sku.lastModified.toUTCString());
+
+        res.status(200).json({
+            product: sku.skuResponse,
+            links: sku.links
+        });
+    } catch(err) {
+        res.status(400).json(err);
+    }
+}
+
+export const deleteSku: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const numberOfDestroyedRows = await PostgresDatabase.db.Skus.destroy({
+            where: {
+                id: req.params.id
+            }
+        });
+
+        await PostgresDatabase.db.InventoryLogs.destroy({
+            where: {
+                skuId: req.params.id
+            }
+        });
+
+        await PostgresDatabase.db.SkuLogs.destroy({
+            where: {
+                skuId: req.params.id
+            }
+        });
+
+        if (numberOfDestroyedRows == 0) 
+            res.status(404).json({
+                message: `Resource 'sku' with id of ${req.params.id} does not exist`
+            });
+        else 
+            res.status(200).json({
+                message: `Resource 'sku' with id of ${req.params.id} successfully deleted`
+            });
+    } catch(err) {
+        res.status(400).json(err);
+    }
+}
+
