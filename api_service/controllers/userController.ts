@@ -2,9 +2,18 @@ import { RequestHandler, Request, Response, NextFunction } from "express";
 import { User } from "../models/users.js";
 import PostgresDatabase from "../database/postgresHandler.js";
 import isCached from "../middleware/chachingChecker.js";
+import bcrypt from 'bcryptjs';
 
 export const createUser: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
+        if (process.env.SALT_ROUNDS == undefined) {
+            res.status(500).json({
+                message: "Environment variable 'SALT_ROUNDS' not defined"
+            });
+            return;
+        }
+
+        req.body.password = await bcrypt.hash(req.body.password, +process.env.SALT_ROUNDS)
 
         const user: User = new User(
             await PostgresDatabase.db.Users.create(req.body)
