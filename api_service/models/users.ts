@@ -131,33 +131,33 @@ export class User {
         if (this.#userType == UserType.SUPPLY_ANALYST) {
             additionalLinks = [                
                 {
-                    "href": `${process.env.API_URL}:${process.env.API_PORT}/products/logs?changedByUserId=${this.#id}`,
-                    "rel": "logs",
+                    "href": `${process.env.API_URL}:${process.env.API_PORT}/logs/products?changedByUserId=${this.#id}`,
+                    "rel": "products",
                     "type": "GET"
                 },        
                 {
-                    "href": `${process.env.API_URL}:${process.env.API_PORT}/products/logs`,
-                    "rel": "logs",
+                    "href": `${process.env.API_URL}:${process.env.API_PORT}/logs/products`,
+                    "rel": "products",
                     "type": "GET"
                 },
                 {
-                    "href": `${process.env.API_URL}:${process.env.API_PORT}/skus/logs?changedByUserId=${this.#id}`,
-                    "rel": "logs",
+                    "href": `${process.env.API_URL}:${process.env.API_PORT}/logs/skus?changedByUserId=${this.#id}`,
+                    "rel": "skus",
                     "type": "GET"
                 },        
                 {
-                    "href": `${process.env.API_URL}:${process.env.API_PORT}/skus/logs`,
-                    "rel": "logs",
+                    "href": `${process.env.API_URL}:${process.env.API_PORT}/logs/skus`,
+                    "rel": "skus",
                     "type": "GET"
                 },
                 {
-                    "href": `${process.env.API_URL}:${process.env.API_PORT}/inventory/logs?changedByUserId=${this.#id}`,
-                    "rel": "logs",
+                    "href": `${process.env.API_URL}:${process.env.API_PORT}/logs/inventory?changedByUserId=${this.#id}`,
+                    "rel": "inventory",
                     "type": "GET"
                 },        
                 {
-                    "href": `${process.env.API_URL}:${process.env.API_PORT}/inventory/logs`,
-                    "rel": "logs",
+                    "href": `${process.env.API_URL}:${process.env.API_PORT}/logs/inventory`,
+                    "rel": "inventory",
                     "type": "GET"
                 }
             ]

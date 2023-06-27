@@ -64,19 +64,27 @@ export class SkuLog {
 
     get skuLogResponse() {
         return {
-            "skuLog": {
-                id: this.#id,
-                skuId: this.#skuId,
-                changedByUserId: this.#changedByUserId,
-                changeType: this.#changeType,
-                changeDateTime: this.#changeDateTime
-            },
-            "links": this.links
+            id: this.#id,
+            skuId: this.#skuId,
+            changedByUserId: this.#changedByUserId,
+            changeType: this.#changeType,
+            changeDateTime: this.#changeDateTime
         }
     }
 
-    get links(): string[] {
-        return [];
+    static get links(): any[] {
+        return [
+            {
+                "href": `${process.env.API_URL}:${process.env.API_PORT}/logs/products`,
+                "rel": "products",
+                "type": "GET"
+            },
+            {
+                "href": `${process.env.API_URL}:${process.env.API_PORT}/logs/inventory`,
+                "rel": "inventory",
+                "type": "GET"
+            }
+        ];
     }
 
     static createBatch(array: any[]): SkuLog[] {

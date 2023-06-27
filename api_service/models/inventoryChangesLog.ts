@@ -71,20 +71,28 @@ export class InventoryLog {
 
     get inventoryLogResponse() {
         return {
-            "inventoryLog": {
-                id: this.#id,
-                skuId: this.#skuId,
-                changedByUserId: this.#changedByUserId,
-                changeType: this.#changeType,
-                changeDateTime: this.#changeDateTime,
-                quantityChange: this.#quantityChange
-            },
-            "links": this.links
+            id: this.#id,
+            skuId: this.#skuId,
+            changedByUserId: this.#changedByUserId,
+            changeType: this.#changeType,
+            changeDateTime: this.#changeDateTime,
+            quantityChange: this.#quantityChange
         }
     }
 
-    get links(): string[] {
-        return [];
+    static get links(): any[] {
+        return [
+            {
+                "href": `${process.env.API_URL}:${process.env.API_PORT}/logs/products`,
+                "rel": "products",
+                "type": "GET"
+            },
+            {
+                "href": `${process.env.API_URL}:${process.env.API_PORT}/logs/skus`,
+                "rel": "skus",
+                "type": "GET"
+            }
+        ];
     }
 
     static createBatch(array: any[]): InventoryLog[] {

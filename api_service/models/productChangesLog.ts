@@ -64,19 +64,27 @@ export class ProductLog {
 
     get productLogResponse() {
         return {
-            "productLog": {
-                id: this.#id,
-                productId: this.#productId,
-                changedByUserId: this.#changedByUserId,
-                changeType: this.#changeType,
-                changeDateTime: this.#changeDateTime
-            },
-            "links": this.links
+            id: this.#id,
+            productId: this.#productId,
+            changedByUserId: this.#changedByUserId,
+            changeType: this.#changeType,
+            changeDateTime: this.#changeDateTime
         }
     }
 
-    get links(): string[] {
-        return [];
+    static get links(): any[] {
+        return [
+            {
+                "href": `${process.env.API_URL}:${process.env.API_PORT}/logs/inventory`,
+                "rel": "inventory",
+                "type": "GET"
+            },
+            {
+                "href": `${process.env.API_URL}:${process.env.API_PORT}/logs/skus`,
+                "rel": "skus",
+                "type": "GET"
+            }
+        ];
     }
 
     static createBatch(array: any[]): ProductLog[] {
