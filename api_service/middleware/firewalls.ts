@@ -26,6 +26,7 @@ export const usersFirewall = async (req: Request, res: Response, next: NextFunct
             })
             return;
         }
+        next();
     } catch(err) {
         res.status(400).json(err);
     }
@@ -40,6 +41,7 @@ export const managersFirewall = async (req: Request, res: Response, next: NextFu
             })
             return;
         }
+        next();
     } catch(err) {
         res.status(400).json(err);
     }
@@ -55,6 +57,7 @@ export const workerFirewall = async (req: Request, res: Response, next: NextFunc
             })
             return;
         }
+        next();
     } catch(err) {
         res.status(400).json(err);
     }

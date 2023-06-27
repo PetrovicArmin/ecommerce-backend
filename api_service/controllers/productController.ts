@@ -112,7 +112,27 @@ export const updateProduct: RequestHandler = async (req: Request, res: Response,
 export const deleteProduct: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const numberOfDestroyedRows = await PostgresDatabase.db.sq.transaction(async (t) => {
+            await PostgresDatabase.db.ProductsCategories.destroy({
+                where: {
+                    productId: req.params.id
+                },
+                transaction: t
+            });
+            
+            await PostgresDatabase.db.Skus.destroy({
+                where: {
+                    productId: req.params.id
+                },
+                transaction: t
+            });
 
+            await PostgresDatabase.db.ProductLogs.destroy({
+                where: {
+                    productId: req.params.id
+                },
+                transaction: t
+            });
+            
             const destroyed = await PostgresDatabase.db.Products.destroy({
                 where: {
                     id: req.params.id
@@ -120,26 +140,8 @@ export const deleteProduct: RequestHandler = async (req: Request, res: Response,
                 transaction: t
             });
     
-            await PostgresDatabase.db.ProductsCategories.destroy({
-                where: {
-                    productId: req.params.id
-                },
-                transaction: t
-            });
     
-            await PostgresDatabase.db.Skus.destroy({
-                where: {
-                    productId: req.params.id
-                },
-                transaction: t
-            });
     
-            await PostgresDatabase.db.ProductLogs.destroy({
-                where: {
-                    productId: req.params.id
-                },
-                transaction: t
-            });
 
             return destroyed;
         })
