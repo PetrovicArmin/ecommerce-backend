@@ -9,6 +9,7 @@ import productRouter from './routes/productRoutes.js';
 import categoryRouter from './routes/categoryRoutes.js';
 import skuRouter from './routes/skuRoutes.js';
 import usersRouter from './routes/userRoutes.js';
+import logsRouter from './routes/logRoutes.js';
 
 const __filename: string = fileURLToPath(import.meta.url);
 const __dirname: string = path.dirname(__filename);
@@ -29,6 +30,7 @@ app.use('/products', productRouter);
 app.use('/categories', categoryRouter);
 app.use('/skus', skuRouter);
 app.use('/users', usersRouter);
+app.use('/logs', logsRouter);
 
 const port: number = 8080; 
 app.listen(port, () => {
