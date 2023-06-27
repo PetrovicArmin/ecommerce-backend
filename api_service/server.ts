@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 
 import productRouter from './routes/productRoutes.js';
 import categoryRouter from './routes/categoryRoutes.js';
+import skuRouter from './routes/skuRoutes.js';
 
 const __filename: string = fileURLToPath(import.meta.url);
 const __dirname: string = path.dirname(__filename);
@@ -25,6 +26,7 @@ app.use(bodyParser.json())
 //routes
 app.use('/products', productRouter);
 app.use('/categories', categoryRouter);
+app.use('/skus', skuRouter);
 
 const port: number = 8080; 
 app.listen(port, () => {

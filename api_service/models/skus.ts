@@ -113,24 +113,47 @@ export class Sku {
 
     get skuResponse() {
         return {
-            "sku": {
-                id: this.#id,
-                productId: this.#productId,
-                skuCode: this.#skuCode,
-                color: this.#color,
-                weight: this.#weight,
-                countryOfOrigin: this.#countryOfOrigin,
-                price: this.#price,
-                quantityInStock: this.#quantityInStock,
-                size: this.#size,
-                details: this.#details
-            },
-            "links": this.links
+            id: this.#id,
+            productId: this.#productId,
+            skuCode: this.#skuCode,
+            color: this.#color,
+            weight: this.#weight,
+            countryOfOrigin: this.#countryOfOrigin,
+            price: this.#price,
+            quantityInStock: this.#quantityInStock,
+            size: this.#size,
+            details: this.#details
         }
     }
 
-    get links(): string[] {
-        return [];
+    get links(): any[] {
+        return [
+            {
+                "href": `${process.env.API_URL}:${process.env.API_PORT}/skus/`,
+                "rel": "skus",
+                "type": "POST"
+            },
+            {
+                "href": `${process.env.API_URL}:${process.env.API_PORT}/skus/${this.#id}`,
+                "rel": "skus",
+                "type": "GET"
+            },
+            {
+                "href": `${process.env.API_URL}:${process.env.API_PORT}/skus/${this.#id}`,
+                "rel": "skus",
+                "type": "PUT"
+            },
+            {
+                "href": `${process.env.API_URL}:${process.env.API_PORT}/skus/${this.#id}`,
+                "rel": "skus",
+                "type": "DELETE"
+            },
+            {
+                "href": `${process.env.API_URL}:${process.env.API_PORT}/skus?productId=${this.#productId}`,
+                "rel": "skus",
+                "type": "GET"
+            }
+        ];
     }
 
     static createBatch(array: any[]): Sku[] {
