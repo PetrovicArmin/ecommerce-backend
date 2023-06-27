@@ -4,12 +4,12 @@ import { Product } from '../models/products.js';
 import isCached from '../middleware/chachingChecker.js';
 import { Category } from '../models/categories.js';
 import { ProductCategory } from '../models/productsCategories.js';
-import { Op } from 'sequelize';
+import { Op, Transaction } from 'sequelize';
 
-const updateLastModifiedCategory = async (req: Request, res: Response, now: Date) => {
+const updateLastModifiedCategory = async (req: Request, res: Response, now: Date, t: Transaction) => {
     await PostgresDatabase.db.Products.update({
         lastModifiedCategory: now
-    }, { where: { id: req.params.id } });
+    }, { where: { id: req.params.id }, transaction: t });
 
     res.setHeader('Last-Modified', now.toUTCString());
 }
@@ -111,29 +111,38 @@ export const updateProduct: RequestHandler = async (req: Request, res: Response,
 
 export const deleteProduct: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const numberOfDestroyedRows = await PostgresDatabase.db.Products.destroy({
-            where: {
-                id: req.params.id
-            }
-        });
+        const numberOfDestroyedRows = await PostgresDatabase.db.sq.transaction(async (t) => {
 
-        await PostgresDatabase.db.ProductsCategories.destroy({
-            where: {
-                productId: req.params.id
-            }
-        });
+            const destroyed = await PostgresDatabase.db.Products.destroy({
+                where: {
+                    id: req.params.id
+                },
+                transaction: t
+            });
+    
+            await PostgresDatabase.db.ProductsCategories.destroy({
+                where: {
+                    productId: req.params.id
+                },
+                transaction: t
+            });
+    
+            await PostgresDatabase.db.Skus.destroy({
+                where: {
+                    productId: req.params.id
+                },
+                transaction: t
+            });
+    
+            await PostgresDatabase.db.ProductLogs.destroy({
+                where: {
+                    productId: req.params.id
+                },
+                transaction: t
+            });
 
-        await PostgresDatabase.db.Skus.destroy({
-            where: {
-                productId: req.params.id
-            }
-        });
-
-        await PostgresDatabase.db.ProductLogs.destroy({
-            where: {
-                productId: req.params.id
-            }
-        });
+            return destroyed;
+        })
 
         if (numberOfDestroyedRows == 0) 
             res.status(404).json({
@@ -159,14 +168,16 @@ export const addCategories: RequestHandler = async (req: Request, res: Response,
                 message: `Some of the categories sent in body do not exist`
             })
         else {
-            await PostgresDatabase.db.ProductsCategories.bulkCreate(req.body.categoryIds.map((categoryId: number) => {
-                return {
-                    productId: req.params.id,
-                    categoryId: categoryId
-                }
-            }))
-
-            await updateLastModifiedCategory(req, res, new Date());
+            await PostgresDatabase.db.sq.transaction(async t => {
+                await PostgresDatabase.db.ProductsCategories.bulkCreate(req.body.categoryIds.map((categoryId: number) => {
+                    return {
+                        productId: req.params.id,
+                        categoryId: categoryId
+                    }
+                }), { transaction: t })
+    
+                await updateLastModifiedCategory(req, res, new Date(), t);
+            });
 
             res.status(200).json({
                 message: `Successfully added resource 'categories' to product with id ${req.params.id}`
@@ -252,12 +263,20 @@ export const deleteCategories: RequestHandler = async (req: Request, res: Respon
             return;
         }
 
-        const numOfDeletedRows: number = await PostgresDatabase.db.ProductsCategories.destroy({
-            where: {
-                categoryId: {
-                    [Op.in]: categoryIds
-                }
-            }
+        const numOfDeletedRows: number = await PostgresDatabase.db.sq.transaction(async t => {
+            const deleted: number = await PostgresDatabase.db.ProductsCategories.destroy({
+                where: {
+                    categoryId: {
+                        [Op.in]: categoryIds
+                    }
+                },
+                transaction: t
+            });
+
+            if (deleted != 0)
+                await updateLastModifiedCategory(req, res, new Date(), t);
+
+            return deleted;
         });
 
         if (numOfDeletedRows == 0) {
@@ -267,7 +286,6 @@ export const deleteCategories: RequestHandler = async (req: Request, res: Respon
             return;
         }
 
-        await updateLastModifiedCategory(req, res, new Date());
 
         res.status(200).json({
             message: `Successfully deleted categories from product with id of ${req.params.id}`,

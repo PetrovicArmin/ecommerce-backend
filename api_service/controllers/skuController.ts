@@ -97,23 +97,30 @@ export const updateSku: RequestHandler = async (req: Request, res: Response, nex
 
 export const deleteSku: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const numberOfDestroyedRows = await PostgresDatabase.db.Skus.destroy({
-            where: {
-                id: req.params.id
-            }
-        });
+        const numberOfDestroyedRows = await PostgresDatabase.db.sq.transaction(async t => {
+            const destroyed: number = await PostgresDatabase.db.Skus.destroy({
+                where: {
+                    id: req.params.id
+                },
+                transaction: t
+            });
+    
+            await PostgresDatabase.db.InventoryLogs.destroy({
+                where: {
+                    skuId: req.params.id
+                },
+                transaction: t
+            });
+    
+            await PostgresDatabase.db.SkuLogs.destroy({
+                where: {
+                    skuId: req.params.id
+                },
+                transaction: t
+            });
 
-        await PostgresDatabase.db.InventoryLogs.destroy({
-            where: {
-                skuId: req.params.id
-            }
-        });
-
-        await PostgresDatabase.db.SkuLogs.destroy({
-            where: {
-                skuId: req.params.id
-            }
-        });
+            return destroyed;
+        })
 
         if (numberOfDestroyedRows == 0) 
             res.status(404).json({

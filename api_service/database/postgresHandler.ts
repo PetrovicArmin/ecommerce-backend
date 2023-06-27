@@ -138,6 +138,10 @@ class PostgresDatabase {
         throw Error('There is no database created');
     }
 
+    get sq(): Sequelize {
+        return this.#sequelize;
+    }
+
     static removeDatabase(): void {
         this.#database = undefined;
     }
