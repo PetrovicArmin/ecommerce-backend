@@ -99,47 +99,51 @@ export const usersMetaData: ModelData = {
 };
 
 export class User {
-    #id: number;
-    #firstName: string;
-    #lastName: string
-    #email: string;
-    #username: string;
+    id: number;
+    firstName: string;
+    lastName: string
+    email: string;
+    username: string;
     password: string;
-    #userType: string;
+    userType: string;
     accessToken: string;
     refreshToken: string;
     lastModified: Date;
+    accessTokenExpiresAt: Date;
+    refreshTokenExpiresAt: Date;
 
     constructor(productObject: any) {
-        this.#id = productObject.id ;
-        this.#firstName = productObject.firstName;
-        this.#lastName = productObject.lastName;
-        this.#email = productObject.email;
-        this.#username = productObject.username;
-        this.#userType = productObject.userType;
+        this.id = productObject.id ;
+        this.firstName = productObject.firstName;
+        this.lastName = productObject.lastName;
+        this.email = productObject.email;
+        this.username = productObject.username;
+        this.userType = productObject.userType;
         this.accessToken = productObject.accessToken;
         this.refreshToken = productObject.refreshToken;
         this.lastModified = productObject.lastModified;
         this.password = productObject.password;
+        this.accessTokenExpiresAt = productObject.accessTokenExpiresAt;
+        this.refreshTokenExpiresAt = productObject.refreshTokenExpiresAt;
     }
 
     get userResponse() {
         return {            
-            id: this.#id,
-            firstName: this.#firstName,
-            lastName: this.#lastName,
-            email: this.#email,
-            username: this.#username,
-            userType: this.#userType
+            id: this.id,
+            firstName: this.firstName,
+            lastName: this.lastName,
+            email: this.email,
+            username: this.username,
+            userType: this.userType
         }
     }
 
     get links(): any[] {
         let additionalLinks: any[] = []
-        if (this.#userType == UserType.SUPPLY_ANALYST) {
+        if (this.userType == UserType.SUPPLY_ANALYST) {
             additionalLinks = [                
                 {
-                    "href": `${process.env.API_URL}:${process.env.API_PORT}/logs/products?changedByUserId=${this.#id}`,
+                    "href": `${process.env.API_URL}:${process.env.API_PORT}/logs/products?changedByUserId=${this.id}`,
                     "rel": "products",
                     "type": "GET"
                 },        
@@ -149,7 +153,7 @@ export class User {
                     "type": "GET"
                 },
                 {
-                    "href": `${process.env.API_URL}:${process.env.API_PORT}/logs/skus?changedByUserId=${this.#id}`,
+                    "href": `${process.env.API_URL}:${process.env.API_PORT}/logs/skus?changedByUserId=${this.id}`,
                     "rel": "skus",
                     "type": "GET"
                 },        
@@ -159,7 +163,7 @@ export class User {
                     "type": "GET"
                 },
                 {
-                    "href": `${process.env.API_URL}:${process.env.API_PORT}/logs/inventory?changedByUserId=${this.#id}`,
+                    "href": `${process.env.API_URL}:${process.env.API_PORT}/logs/inventory?changedByUserId=${this.id}`,
                     "rel": "inventory",
                     "type": "GET"
                 },        
@@ -169,7 +173,7 @@ export class User {
                     "type": "GET"
                 }
             ]
-        } else if (this.#userType == UserType.SHOP_WORKER) {
+        } else if (this.userType == UserType.SHOP_WORKER) {
             additionalLinks = [
                 {
                     "href": `${process.env.API_URL}:${process.env.API_PORT}/skus`,
@@ -233,7 +237,7 @@ export class User {
                 "type": "GET"
             },
             {
-                "href": `${process.env.API_URL}:${process.env.API_PORT}/users/${this.#id}`,
+                "href": `${process.env.API_URL}:${process.env.API_PORT}/users/${this.id}`,
                 "rel": "users",
                 "type": "GET"
             },
@@ -243,12 +247,12 @@ export class User {
                 "type": "POST"
             },
             {
-                "href": `${process.env.API_URL}:${process.env.API_PORT}/users/${this.#id}`,
+                "href": `${process.env.API_URL}:${process.env.API_PORT}/users/${this.id}`,
                 "rel": "users",
                 "type": "UPDATE"
             },
             {
-                "href": `${process.env.API_URL}:${process.env.API_PORT}/users/${this.#id}`,
+                "href": `${process.env.API_URL}:${process.env.API_PORT}/users/${this.id}`,
                 "rel": "users",
                 "type": "DELETE"
             },...additionalLinks

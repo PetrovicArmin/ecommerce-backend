@@ -3,7 +3,7 @@ import { User } from '../models/users.js';
 import PostgresDatabase from '../database/postgresHandler.js';
 import bcrypt from 'bcryptjs';
 
-class Token {
+export class Token {
     accessToken: string;
     accessTokenExpiresAt: Date;
     refreshToken: string;
@@ -23,7 +23,7 @@ class Token {
 
 
 const getUser = async (username: string, password: string): Promise<User | undefined> => {
-    console.log('getUser');
+
     const user: User = new User(
         await PostgresDatabase.db.Users.findOne({
             where: {
@@ -41,7 +41,7 @@ const getUser = async (username: string, password: string): Promise<User | undef
 }
 
 const getClient = async (clientID: string, clientSecret: string): Promise<any> => {
-    console.log('getClient');
+
     const client = {
         clientID,
         clientSecret,
@@ -53,7 +53,7 @@ const getClient = async (clientID: string, clientSecret: string): Promise<any> =
 }
 
 const saveToken = async (token: Token, _: any, user: User): Promise<any> => {
-    console.log('saveToken');
+
     await PostgresDatabase.db.Users.update({
         accessToken: token.accessToken,
         accessTokenExpiresAt: token.accessTokenExpiresAt,
@@ -61,7 +61,7 @@ const saveToken = async (token: Token, _: any, user: User): Promise<any> => {
         refreshTokenExpiresAt: token.refreshTokenExpiresAt,
         lastModified: new Date()
     }, { where: { id: user.userResponse.id }});
-    console.log('saveToken izašao');
+
     return Promise.resolve({
         accessToken: token.accessToken,
         accessTokenExpiresAt: token.accessTokenExpiresAt,
@@ -72,30 +72,35 @@ const saveToken = async (token: Token, _: any, user: User): Promise<any> => {
     });
 }
 
-const getAccessToken = async (accessToken: string): Promise<Token> => {
-    console.log('getToken');
-    const user: User = new User(
-        await PostgresDatabase.db.Users.findOne({
-            where: {
-                accessToken: accessToken
-            }
-        })
-    )
+const getAccessToken = async (accessToken: string): Promise<Token | false> => {
+
+    
+    const userInstance: any = await PostgresDatabase.db.Users.findOne({
+        where: {
+            accessToken: accessToken
+        }
+    });
+
+
+    if (userInstance == null)
+        return Promise.resolve(false);
+
+    const user: User = new User(userInstance);
+
 
     return Promise.resolve(new Token({
         accessToken: user.accessToken,
+        accessTokenExpiresAt: user.accessTokenExpiresAt,
         refreshToken: user.refreshToken,
         client: {
             id: user.userResponse.id
         },
-        user: {
-            id: user.userResponse.id
-        }
+        user: user
     }))
 }
 
 const getRefreshToken = async (refreshToken: string): Promise<Token> => {
-    console.log('getRefreshtoken');
+
     const user: User = new User(
         await PostgresDatabase.db.Users.findOne({
             where: {
@@ -105,27 +110,25 @@ const getRefreshToken = async (refreshToken: string): Promise<Token> => {
     )
 
     return Promise.resolve(new Token({
-        accessToken: user.accessToken,
         refreshToken: user.refreshToken,
+        refreshTokenExpiresAt: user.refreshTokenExpiresAt,
         client: {
             id: user.userResponse.id
         },
-        user: {
-            id: user.userResponse.id
-        }
+        user: user
     }))
 }
 
 const verifyScope = async (accessToken: Token, scope: any): Promise<boolean> => {
-    console.log('verifyScope');
     return Promise.resolve(true);
 }
 
 const revokeToken = async (token: Token): Promise<boolean> => {
-    console.log('revokeToken');
+
     try {
         await PostgresDatabase.db.Users.update({
             refreshToken: null,
+            refreshTokenExpiresAt: null,
             lastModified: new Date()
         }, { where: { id: token.user.userResponse.id } })
     } catch(err) {
@@ -134,7 +137,7 @@ const revokeToken = async (token: Token): Promise<boolean> => {
     return Promise.resolve(true);
 }
 
-const oauth: oAuth2Server = new oAuth2Server({
+export const oauth: oAuth2Server = new oAuth2Server({
     model: {
         getUser: getUser,
         getClient: getClient,
@@ -147,5 +150,3 @@ const oauth: oAuth2Server = new oAuth2Server({
     accessTokenLifetime: 24 * 60 * 60,
     alwaysIssueNewRefreshToken: true
 });
-
-export default oauth;
