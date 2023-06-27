@@ -116,21 +116,135 @@ export class User {
     }
 
     get userResponse() {
-        return {
-            "user": {
-                id: this.#id,
-                firstName: this.#firstName,
-                lastName: this.#lastName,
-                email: this.#email,
-                username: this.#username,
-                userType: this.#userType
-            },
-            "links": this.links
+        return {            
+            id: this.#id,
+            firstName: this.#firstName,
+            lastName: this.#lastName,
+            email: this.#email,
+            username: this.#username,
+            userType: this.#userType
         }
     }
 
-    get links(): string[] {
-        return [];
+    get links(): any[] {
+        let additionalLinks: any[] = []
+        if (this.#userType == UserType.SUPPLY_ANALYST) {
+            additionalLinks = [                
+                {
+                    "href": `${process.env.API_URL}:${process.env.API_PORT}/products/logs?changedByUserId=${this.#id}`,
+                    "rel": "logs",
+                    "type": "GET"
+                },        
+                {
+                    "href": `${process.env.API_URL}:${process.env.API_PORT}/products/logs`,
+                    "rel": "logs",
+                    "type": "GET"
+                },
+                {
+                    "href": `${process.env.API_URL}:${process.env.API_PORT}/skus/logs?changedByUserId=${this.#id}`,
+                    "rel": "logs",
+                    "type": "GET"
+                },        
+                {
+                    "href": `${process.env.API_URL}:${process.env.API_PORT}/skus/logs`,
+                    "rel": "logs",
+                    "type": "GET"
+                },
+                {
+                    "href": `${process.env.API_URL}:${process.env.API_PORT}/inventory/logs?changedByUserId=${this.#id}`,
+                    "rel": "logs",
+                    "type": "GET"
+                },        
+                {
+                    "href": `${process.env.API_URL}:${process.env.API_PORT}/inventory/logs`,
+                    "rel": "logs",
+                    "type": "GET"
+                }
+            ]
+        } else if (this.#userType == UserType.SHOP_WORKER) {
+            additionalLinks = [
+                {
+                    "href": `${process.env.API_URL}:${process.env.API_PORT}/skus`,
+                    "rel": "skus",
+                    "type": "GET"
+                },
+                {
+                    "href": `${process.env.API_URL}:${process.env.API_PORT}/skus/:id`,
+                    "rel": "skus",
+                    "type": "GET"
+                },
+                {
+                    "href": `${process.env.API_URL}:${process.env.API_PORT}/skus`,
+                    "rel": "skus",
+                    "type": "POST"
+                },
+                {
+                    "href": `${process.env.API_URL}:${process.env.API_PORT}/skus/:id`,
+                    "rel": "skus",
+                    "type": "UPDATE"
+                },
+                {
+                    "href": `${process.env.API_URL}:${process.env.API_PORT}/skus/:id`,
+                    "rel": "skus",
+                    "type": "DELETE"
+                }
+            ]
+        } else {
+            additionalLinks = [
+                {
+                    "href": `${process.env.API_URL}:${process.env.API_PORT}/products`,
+                    "rel": "products",
+                    "type": "GET"
+                },
+                {
+                    "href": `${process.env.API_URL}:${process.env.API_PORT}/products/:id`,
+                    "rel": "products",
+                    "type": "GET"
+                },
+                {
+                    "href": `${process.env.API_URL}:${process.env.API_PORT}/products`,
+                    "rel": "products",
+                    "type": "POST"
+                },
+                {
+                    "href": `${process.env.API_URL}:${process.env.API_PORT}/products/:id`,
+                    "rel": "products",
+                    "type": "UPDATE"
+                },
+                {
+                    "href": `${process.env.API_URL}:${process.env.API_PORT}/products/:id`,
+                    "rel": "products",
+                    "type": "DELETE"
+                }
+            ]
+        }
+        return [
+            {
+                "href": `${process.env.API_URL}:${process.env.API_PORT}/users`,
+                "rel": "users",
+                "type": "GET"
+            },
+            {
+                "href": `${process.env.API_URL}:${process.env.API_PORT}/users/${this.#id}`,
+                "rel": "users",
+                "type": "GET"
+            },
+            {
+                "href": `${process.env.API_URL}:${process.env.API_PORT}/users`,
+                "rel": "users",
+                "type": "POST"
+            },
+            {
+                "href": `${process.env.API_URL}:${process.env.API_PORT}/users/${this.#id}`,
+                "rel": "users",
+                "type": "UPDATE"
+            },
+            {
+                "href": `${process.env.API_URL}:${process.env.API_PORT}/users/${this.#id}`,
+                "rel": "users",
+                "type": "DELETE"
+            },...additionalLinks
+        ];
     }
 
     static createBatch(array: any[]): User[] {

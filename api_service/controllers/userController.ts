@@ -21,7 +21,29 @@ export const createUser: RequestHandler = async (req: Request, res: Response, ne
 }
 
 export const readUsers: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-    
+    try {
+        const users: User[] = User.createBatch(
+            await PostgresDatabase.db.Users.findAll({ where: req.query })
+        )
+
+        if (users.length == 0) {
+            res.status(404).json({
+                message: "There are no 'User' resources that match your search"
+            });
+            return;
+        }
+
+        res.status(200).json({
+            skus: users.map(user => {
+                return {
+                    sku: user.userResponse,
+                    links: user.links
+                }
+            })
+        });
+    } catch(err) {
+        res.status(400).json(err);
+    }
 }
 
 export const readUser: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
