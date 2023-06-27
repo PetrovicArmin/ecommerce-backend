@@ -1,6 +1,12 @@
 import { ModelAttributes, ModelOptions, DataTypes, literal } from 'sequelize';
 import ModelData from './modelData.js';
 
+export enum UserType {
+    SHOP_WORKER = "SHOP_WORKER",
+    SUPPLY_MANAGER = "SUPPLY_MANAGER",
+    SUPPLY_ANALYST = "SUPPLY_ANALYST"
+};
+
 const attributes: ModelAttributes = {
     id: {
         type: DataTypes.INTEGER,
@@ -51,7 +57,11 @@ const attributes: ModelAttributes = {
     },
     userType: {
         type: DataTypes.STRING,
-        field: 'user_type'
+        allowNull: false,
+        field: 'user_type',
+        validate: {
+            isIn: [[UserType.SHOP_WORKER, UserType.SUPPLY_ANALYST, UserType.SUPPLY_MANAGER]]
+        }
     },
     accessToken: {
         type: DataTypes.STRING,

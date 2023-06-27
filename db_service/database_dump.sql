@@ -97,7 +97,7 @@ CREATE TABLE users (
 	email varchar NOT NULL,
 	username varchar NOT NULL,
 	"password" varchar NOT NULL,
-	user_type varchar NULL,
+	user_type varchar NOT NULL,
 	access_token varchar NULL,
 	refresh_token varchar NULL,
 	last_modified timestamp NOT NULL,
