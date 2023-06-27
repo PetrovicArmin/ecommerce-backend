@@ -4,6 +4,21 @@ import PostgresDatabase from "../database/postgresHandler.js";
 import isCached from "../middleware/chachingChecker.js";
 import bcrypt from 'bcryptjs';
 
+import oauth from '../oauth/oauthServer.js';
+import OAuth2Server from "oauth2-server";
+
+const Request = OAuth2Server.Request;
+const Response = OAuth2Server.Response;
+
+export const login: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const token: OAuth2Server.Token = await oauth.token(new Request(req), new Response(res));
+        res.status(200).json(token);
+    } catch(err) {
+        res.status(400).json(err);
+    }
+}
+
 export const createUser: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
         if (process.env.SALT_ROUNDS == undefined) {
@@ -81,7 +96,13 @@ export const readUser: RequestHandler = async (req: Request, res: Response, next
 }
 
 export const updateUser: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+    
     try {
+        const token: OAuth2Server.Token = await oauth.authenticate(new Request(req), new Response(res));
+
+        console.log("Autenticiran sam, te sam dobio token ispod:");
+        console.log(token);
+
         req.body.lastModified = new Date();
 
         const result = await PostgresDatabase.db.Users.update(req.body, { 

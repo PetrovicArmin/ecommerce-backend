@@ -71,6 +71,14 @@ const attributes: ModelAttributes = {
         type: DataTypes.STRING,
         field: 'refresh_token'
     },
+    accessTokenExpiresAt: {
+        type: "TIMESTAMP",
+        field: 'access_token_expires_at'
+    },
+    refreshTokenExpiresAt: {
+        type: "TIMESTAMP",
+        field: 'refresh_token_expires_at'
+    },
     lastModified: {
         type: "TIMESTAMP",
         allowNull: false,
