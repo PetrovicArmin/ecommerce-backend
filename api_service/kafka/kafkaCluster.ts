@@ -1,4 +1,4 @@
-import { Admin, ITopicConfig, ITopicMetadata, Kafka } from "kafkajs";
+import { Admin, ITopicConfig, ITopicMetadata, Kafka, Message, Producer, TopicMessages } from "kafkajs";
 
 let kafka: Kafka | undefined = undefined;
 
@@ -36,9 +36,36 @@ const configureKafkaTopics = async (topics: ITopicConfig[]): Promise<void> => {
     }
 };
 
+const sendMessage = async (topic: string, messages: Message[]): Promise<void> => {
+    if (kafka == undefined) 
+        throw Error("You have not set up kafka server!");
+    
+    const producer: Producer = kafka.producer();
+    await producer.connect();
+    await producer.send({
+        topic: topic,
+        messages: messages
+    });
+    await producer.disconnect();
+}   
+
+const sendMessages = async (topicMessages: TopicMessages[]): Promise<void> => {
+    if (kafka == undefined)
+        throw Error("You have not set up kafka server!");
+
+    const producer: Producer = kafka?.producer();
+
+    await producer.connect();
+    await producer.sendBatch({
+        topicMessages: topicMessages
+    });
+    await producer.disconnect();
+}
+
 const kafkaCluster = {
     configureKafkaTopics,
-    configureKafkaServer
+    configureKafkaServer,
+    sendMessage
 };
 
 export default kafkaCluster;
