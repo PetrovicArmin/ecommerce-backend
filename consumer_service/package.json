@@ -8,12 +8,10 @@
   "license": "ISC",
   "scripts": {
     "build": "rimraf ./build && npx tsc",
-    "start:productLogs": "node build/index.js productLogs",
-    "start:skuLogs": "node build/index.js skuLogs",
-    "start:inventoryLogs": "node build/index.js inventoryLogs",
-    "dev:inventoryLogs": "concurrently \"npx tsc --watch\" \"nodemon -q build/index.js inventoryLogs\"",
-    "dev:productLogs": "concurrently \"npx tsc --watch\" \"nodemon -q build/index.js productLogs\"",
-    "dev:skuLogs": "concurrently \"npx tsc --watch\" \"nodemon -q build/index.js skuLogs\""
+    "start:inventory": "node build/index.js inventory",
+    "start:skuAndProduct": "node build/index.js skuAndProduct",
+    "dev:inventory": "concurrently \"npx tsc --watch\" \"nodemon -q build/index.js inventory\"",
+    "dev:skuAndProduct": "concurrently \"npx tsc --watch\" \"nodemon -q build/index.js skuAndProduct\""
   },
   "dependencies": {
     "dotenv": "^16.3.1",
