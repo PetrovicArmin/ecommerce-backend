@@ -2,6 +2,8 @@ import { NextFunction, Request, RequestHandler, Response } from "express";
 import { Sku } from "../models/skus.js";
 import PostgresDatabase from "../database/postgresHandler.js";
 import isCached from "../middleware/chachingChecker.js";
+import kafkaCluster from "../kafka/kafkaCluster.js";
+import ChangeType from "../models/changeType.js";
 
 export const createSku: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -11,6 +13,8 @@ export const createSku: RequestHandler = async (req: Request, res: Response, nex
         );
 
         res.setHeader('Last-Modified', sku.lastModified.toUTCString());
+
+        await kafkaCluster.skusEvent(sku.skuResponse.id, req.body.token.user.id, ChangeType.INSERT_ROW);
 
         res.status(200).json({
             sku: sku.skuResponse,
@@ -75,6 +79,8 @@ export const updateSku: RequestHandler = async (req: Request, res: Response, nex
     try {
         req.body.lastModified = new Date();
 
+        const oldInstance = await PostgresDatabase.db.Skus.findOne({ where: { id: req.params.id } });
+
         const result = await PostgresDatabase.db.Skus.update(req.body, { 
             where: { id: req.params.id }, 
             returning: true
@@ -88,6 +94,18 @@ export const updateSku: RequestHandler = async (req: Request, res: Response, nex
         }
 
         const sku: Sku = new Sku(result[1][0]);
+        const old: Sku = new Sku(oldInstance);
+
+        if (old.skuResponse.quantityInStock != sku.skuResponse.quantityInStock) {
+            const change: number = old.skuResponse.quantityInStock - sku.skuResponse.quantityInStock;
+
+            const type: ChangeType = change > 0 ? ChangeType.QUANTITY_REDUCTION : ChangeType.QUANTITY_INCREASE;
+
+            await kafkaCluster.inventoryEvent(sku.skuResponse.id, req.body.token.user.id, type, Math.abs(change));
+        } else {
+            await kafkaCluster.skusEvent(sku.skuResponse.id, req.body.token.user.id, ChangeType.UPDATE_ROW);
+        }
+
 
         res.setHeader('Last-Modified', sku.lastModified.toUTCString());
 
@@ -102,39 +120,22 @@ export const updateSku: RequestHandler = async (req: Request, res: Response, nex
 
 export const deleteSku: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const numberOfDestroyedRows = await PostgresDatabase.db.sq.transaction(async t => {
-            await PostgresDatabase.db.InventoryLogs.destroy({
-                where: {
-                    skuId: req.params.id
-                },
-                transaction: t
-            });
-    
-            await PostgresDatabase.db.SkuLogs.destroy({
-                where: {
-                    skuId: req.params.id
-                },
-                transaction: t
-            });
-
-            const destroyed: number = await PostgresDatabase.db.Skus.destroy({
-                where: {
-                    id: req.params.id
-                },
-                transaction: t
-            });
-
-            return destroyed;
-        })
+        const numberOfDestroyedRows = await PostgresDatabase.db.Skus.destroy({
+            where: {
+                id: req.params.id
+            }
+        });
 
         if (numberOfDestroyedRows == 0) 
             res.status(404).json({
                 message: `Resource 'sku' with id of ${req.params.id} does not exist`
             });
-        else 
+        else {
+            await kafkaCluster.skusEvent(+req.params.id, req.body.token.user.id, ChangeType.DELETE_ROW);
             res.status(200).json({
                 message: `Resource 'sku' with id of ${req.params.id} successfully deleted`
             });
+        }
     } catch(err) {
         res.status(400).json(err);
     }

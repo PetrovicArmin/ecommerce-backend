@@ -123,13 +123,6 @@ CREATE TABLE product_changes_log (
 	CONSTRAINT product_changes_log_pk PRIMARY KEY (id)
 );
 
-
--- product_changes_log foreign keys
-
-ALTER TABLE product_changes_log ADD CONSTRAINT product_changes_log_fk FOREIGN KEY (product_id) REFERENCES products(id);
-ALTER TABLE product_changes_log ADD CONSTRAINT product_changes_log_fk_1 FOREIGN KEY (changed_by_user_id) REFERENCES users(id);
-
-
 -- sku_changes_log
 
 DROP TABLE IF EXISTS sku_changes_log;
@@ -142,12 +135,6 @@ CREATE TABLE sku_changes_log (
 	change_date_time timestamp NOT NULL,
 	CONSTRAINT sku_changes_log_pk PRIMARY KEY (id)
 );
-
-
--- sku_changes_log foreign keys
-
-ALTER TABLE sku_changes_log ADD CONSTRAINT sku_changes_log_fk FOREIGN KEY (sku_id) REFERENCES skus(id);
-ALTER TABLE sku_changes_log ADD CONSTRAINT sku_changes_log_fk_1 FOREIGN KEY (changed_by_user_id) REFERENCES users(id);
 
 -- inventory_log
 
@@ -162,11 +149,3 @@ CREATE TABLE inventory_log (
 	quantity_change int4 NOT NULL,
 	CONSTRAINT inventory_log_pk PRIMARY KEY (id)
 );
-
-
--- inventory_log foreign keys
-
-ALTER TABLE inventory_log ADD CONSTRAINT inventory_log_fk FOREIGN KEY (changed_by_user_id) REFERENCES users(id);
-ALTER TABLE inventory_log ADD CONSTRAINT inventory_log_fk_1 FOREIGN KEY (sku_id) REFERENCES skus(id);
-
--- maybe problems with dialects?

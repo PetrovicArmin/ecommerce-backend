@@ -1,4 +1,5 @@
 import { Admin, ITopicConfig, ITopicMetadata, Kafka, Message, Producer, TopicMessages } from "kafkajs";
+import ChangeType from "../models/changeType.js";
 
 let kafka: Kafka | undefined = undefined;
 
@@ -49,23 +50,47 @@ const sendMessage = async (topic: string, messages: Message[]): Promise<void> =>
     await producer.disconnect();
 }   
 
-const sendMessages = async (topicMessages: TopicMessages[]): Promise<void> => {
-    if (kafka == undefined)
-        throw Error("You have not set up kafka server!");
+const productsEvent = async (productId: number, userId: number, changeType: ChangeType) => {
+    await kafkaCluster.sendMessage('productLogs', [{
+        value: JSON.stringify({
+            productId: productId,
+            changedByUserId: userId,
+            changeType: changeType,
+            changeDateTime: new Date()
+        })
+    }]);
+};
 
-    const producer: Producer = kafka?.producer();
+const skusEvent = async (skuId: number, userId: number, changeType: ChangeType) => {
+    await kafkaCluster.sendMessage('skuLogs', [{
+        value: JSON.stringify({
+            skuId: skuId,
+            changedByUserId: userId,
+            changeType: changeType,
+            changeDateTime: new Date()
+        })
+    }]);
+}
 
-    await producer.connect();
-    await producer.sendBatch({
-        topicMessages: topicMessages
-    });
-    await producer.disconnect();
+const inventoryEvent = async (skuId: number, userId: number, changeType: ChangeType, quantityChange: number) => {
+    await kafkaCluster.sendMessage('inventoryLogs', [{
+        value: JSON.stringify({
+            skuId: skuId,
+            changedByUserId: userId,
+            changeType: changeType,
+            changeDateTime: new Date(),
+            quantityChange: quantityChange
+        })
+    }]);
 }
 
 const kafkaCluster = {
     configureKafkaTopics,
     configureKafkaServer,
-    sendMessage
+    sendMessage,
+    productsEvent,
+    skusEvent,
+    inventoryEvent
 };
 
 export default kafkaCluster;

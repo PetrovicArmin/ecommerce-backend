@@ -5,6 +5,9 @@ import isCached from '../middleware/chachingChecker.js';
 import { Category } from '../models/categories.js';
 import { ProductCategory } from '../models/productsCategories.js';
 import { Op, Transaction } from 'sequelize';
+import kafkaCluster from '../kafka/kafkaCluster.js';
+import ChangeType from '../models/changeType.js';
+
 
 const updateLastModifiedCategory = async (req: Request, res: Response, now: Date, t: Transaction) => {
     await PostgresDatabase.db.Products.update({
@@ -71,6 +74,8 @@ export const createProduct: RequestHandler = async (req: Request, res: Response,
 
         res.setHeader('Last-Modified', product.lastModified.toUTCString());
 
+        await kafkaCluster.productsEvent(product.productResponse.id, req.body.token.user.id, ChangeType.INSERT_ROW);
+
         res.status(200).json({
             product: product.productResponse,
             links: product.links
@@ -97,6 +102,8 @@ export const updateProduct: RequestHandler = async (req: Request, res: Response,
         }
 
         const product: Product = new Product(result[1][0]);
+
+        await kafkaCluster.productsEvent(product.productResponse.id, req.body.token.user.id, ChangeType.UPDATE_ROW);
 
         res.setHeader('Last-Modified', product.lastModified.toUTCString());
 
@@ -125,13 +132,6 @@ export const deleteProduct: RequestHandler = async (req: Request, res: Response,
                 },
                 transaction: t
             });
-
-            await PostgresDatabase.db.ProductLogs.destroy({
-                where: {
-                    productId: req.params.id
-                },
-                transaction: t
-            });
             
             const destroyed = await PostgresDatabase.db.Products.destroy({
                 where: {
@@ -140,9 +140,6 @@ export const deleteProduct: RequestHandler = async (req: Request, res: Response,
                 transaction: t
             });
     
-    
-    
-
             return destroyed;
         })
 
@@ -150,10 +147,12 @@ export const deleteProduct: RequestHandler = async (req: Request, res: Response,
             res.status(404).json({
                 message: `Resource 'product' with id of ${req.params.id} does not exist`
             });
-        else 
+        else {
+            await kafkaCluster.productsEvent(+req.params.id, req.body.token.user.id, ChangeType.DELETE_ROW);
             res.status(200).json({
                 message: `Resource 'product' with id of ${req.params.id} successfully deleted`
             });
+        }
     } catch(err) {
         res.status(400).json(err);
     }
@@ -180,6 +179,8 @@ export const addCategories: RequestHandler = async (req: Request, res: Response,
     
                 await updateLastModifiedCategory(req, res, new Date(), t);
             });
+
+            await kafkaCluster.productsEvent(+req.params.id, req.body.token.user.id, ChangeType.INSERT_CATEGORY);
 
             res.status(200).json({
                 message: `Successfully added resource 'categories' to product with id ${req.params.id}`
@@ -288,6 +289,7 @@ export const deleteCategories: RequestHandler = async (req: Request, res: Respon
             return;
         }
 
+        await kafkaCluster.productsEvent(+req.params.id, req.body.token.user.id, ChangeType.DELETE_CATEGORY);
 
         res.status(200).json({
             message: `Successfully deleted categories from product with id of ${req.params.id}`,

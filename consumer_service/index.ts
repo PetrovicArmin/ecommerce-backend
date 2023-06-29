@@ -40,6 +40,14 @@ await consumer.run({
         console.log('received message!');
         console.log('    topic: ', topic);
         console.log('    partition: ', partition);
-        console.log('    message: ', message.value);
+        if (!message.value) 
+            return;
+        
+        let log: any = JSON.parse(message.value.toString());
+
+        console.log('    message: \n', JSON.stringify(log, undefined, 2));
+
+        //na osnovu parametara u logu i na osnovu tipa grupe saznati da li u 
+        //koju tabelu da vršimo umetanje!
     },
 })
