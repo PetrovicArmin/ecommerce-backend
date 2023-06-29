@@ -12,6 +12,8 @@ import usersRouter from './routes/userRoutes.js';
 import logsRouter from './routes/logRoutes.js';
 import { authenticate } from "./middleware/authenticator.js";
 import { analystsFirewall } from "./middleware/firewalls.js";
+import kafkaCluster from "./kafka/kafkaCluster.js";
+import { ITopicConfig } from "kafkajs";
 
 const __filename: string = fileURLToPath(import.meta.url);
 const __dirname: string = path.dirname(__filename);
@@ -20,8 +22,28 @@ dotenv.config({path: path.join(__dirname, '..', '..', 'main.env')});
 
 PostgresDatabase.createDatabase('development');
 
-const app: Express = express();
+const topics: ITopicConfig[] = [
+  {
+      topic: 'productLogs',
+      numPartitions: 2,
+      replicationFactor: 2
+  },
+  {
+      topic: 'skuLogs',
+      numPartitions: 2,
+      replicationFactor: 2
+  },
+  {
+      topic: 'inventoryLogs',
+      numPartitions: 5,
+      replicationFactor: 2
+  }
+];
 
+kafkaCluster.configureKafkaServer();
+await kafkaCluster.configureKafkaTopics(topics);
+
+const app: Express = express();
 
 //middleware 
 app.use(bodyParser.urlencoded({ extended: true }));
