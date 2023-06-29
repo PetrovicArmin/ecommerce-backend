@@ -104,6 +104,17 @@ class PostgresDatabase {
         return this.#database;
     }
 
+    static getTable(topic: string): ModelStatic<Model<any,any>> {
+        switch(topic) {
+            case 'productLogs': 
+                return this.db.ProductLogs
+            case 'skuLogs':
+                return this.db.SkuLogs;
+            default:
+                return this.db.InventoryLogs;
+        }
+    }
+
     static get db(): PostgresDatabase {
         if (this.#database != undefined)
             return this.#database;
