@@ -13,6 +13,19 @@ services:
       - "${POSTGRES_PORT}:5432"
     restart: unless-stopped
 
+  api:
+    build:
+      context: .
+      dockerfile: ./api_service/Dockerfile
+    image: api-service  
+    container_name: api
+    ports:
+      - "${API_PORT}:8080"
+    depends_on:
+      - postgres
+      - kafka1 
+      - kafka2 
+      - kafka3
 
   kafka1:
     image: confluentinc/cp-kafka
