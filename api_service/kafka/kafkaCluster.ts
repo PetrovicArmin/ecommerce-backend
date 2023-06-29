@@ -3,13 +3,32 @@ import ChangeType from "../models/changeType.js";
 
 let kafka: Kafka | undefined = undefined;
 
-const configureKafkaServer = (): void => {
+const configureKafkaServer = (type: string): void => {
+    let kafka1Port: string | undefined = process.env.KAFKA1_PORT;
+    let kafka2Port: string | undefined = process.env.KAFKA2_PORT;
+    let kafka3Port: string | undefined = process.env.KAFKA3_PORT;
+
+    let kafka1Host: string | undefined = 'localhost';
+    let kafka2Host: string | undefined = 'localhost';
+    let kafka3Host: string | undefined = 'localhost';
+
+    if (type == "PRODUCTION") {
+        console.log('dosao sam ovdje!');
+        kafka1Port = "29092";
+        kafka2Port = "29092";
+        kafka3Port = "29092";
+
+        kafka1Host = "kafka1";
+        kafka2Host = "kafka2";
+        kafka3Host = "kafka3";
+    }
+
     kafka = new Kafka({
         clientId: 'api-service',
         brokers: [
-            `localhost:${process.env.KAFKA1_PORT}`, 
-            `localhost:${process.env.KAFKA2_PORT}`, 
-            `localhost:${process.env.KAFKA3_PORT}`
+            `${kafka1Host}:${kafka1Port}`, 
+            `${kafka2Host}:${kafka2Port}`, 
+            `${kafka3Host}:${kafka3Port}`
         ]
     });
 }

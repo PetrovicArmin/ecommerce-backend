@@ -20,7 +20,10 @@ const __dirname: string = path.dirname(__filename);
 
 dotenv.config({path: path.join(__dirname, '..', '..', 'main.env')});
 
-PostgresDatabase.createDatabase('development');
+if (!process.env.NODE_ENV) 
+  throw Error("Environment not defined");
+
+PostgresDatabase.createDatabase(process.env.NODE_ENV);
 
 const topics: ITopicConfig[] = [
   {
@@ -40,7 +43,7 @@ const topics: ITopicConfig[] = [
   }
 ];
 
-kafkaCluster.configureKafkaServer();
+kafkaCluster.configureKafkaServer(process.env.NODE_ENV);
 await kafkaCluster.configureKafkaTopics(topics);
 
 const app: Express = express();

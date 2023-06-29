@@ -95,11 +95,16 @@ class PostgresDatabase {
     static createDatabase(type: string): PostgresDatabase {
         if (this.#database != undefined)
             return this.#database;
+        
+        let host: string | undefined = 'localhost';
+        let port: string | undefined = process.env.POSTGRES_PORT;
 
-        if (type == 'production') 
-            this.#database = new PostgresDatabase('blabla');
-        else 
-            this.#database = new PostgresDatabase(`postgres://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@localhost:${process.env.POSTGRES_PORT}/${process.env.POSTGRES_DB}`);
+        if (type == 'PRODUCTION') {
+            host = process.env.PG_CONTAINER_NAME;
+            //port = "5432";
+        }
+        
+        this.#database = new PostgresDatabase(`postgres://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@${host}:${port}/${process.env.POSTGRES_DB}`);
 
         return this.#database;
     }
