@@ -103,7 +103,7 @@ Database is dockerized, and it is created by appripriate .sql dump file. ER Diag
 API is RESTful, which means that we implemented:
 
 * Resource based url representations
-* HATEOAS communcation with server
+* HATEOAS communcation links provided by server
 * Implicit caching with *Last-Modified* and *If-Modified-Since* headers
 * Password role based authorization with oauth2
 * Access token authentication with oauth2
