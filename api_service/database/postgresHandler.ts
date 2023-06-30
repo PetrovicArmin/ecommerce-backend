@@ -101,7 +101,7 @@ class PostgresDatabase {
 
         if (type == 'PRODUCTION') {
             host = process.env.PG_CONTAINER_NAME;
-            //port = "5432";
+            port = "5432";
         }
         
         this.#database = new PostgresDatabase(`postgres://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@${host}:${port}/${process.env.POSTGRES_DB}`);

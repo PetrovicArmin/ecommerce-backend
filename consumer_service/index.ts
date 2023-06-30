@@ -1,10 +1,8 @@
 import dotenv from "dotenv";
-import { Kafka } from "kafkajs";
+import kafkaCluster from "../api_service/kafka/kafkaCluster.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import PostgresDatabase from '../api_service/database/postgresHandler.js';
-
-//process.stdin.resume(); //halt program termination
 
 const __filename: string = fileURLToPath(import.meta.url);
 const __dirname: string = path.dirname(__filename);
@@ -15,18 +13,16 @@ const consumerGroup: string = process.argv[2];
 
 console.log("Consumer type: " + consumerGroup);
 
-const db: PostgresDatabase = PostgresDatabase.createDatabase('development');
- 
-const kafka: Kafka = new Kafka({
-    clientId: 'consumer-service',
-    brokers: [
-        `localhost:${process.env.KAFKA1_PORT}`, 
-        `localhost:${process.env.KAFKA2_PORT}`, 
-        `localhost:${process.env.KAFKA3_PORT}`
-    ]
-});
 
-const consumer = kafka.consumer({ groupId: consumerGroup });
+if (process.env.NODE_ENV == undefined) 
+    throw Error("You have not NODE_ENV environment variable set up");
+
+PostgresDatabase.createDatabase(process.env.NODE_ENV);
+
+kafkaCluster.configureKafkaServer(process.env.NODE_ENV, 'consumer-service');
+
+const consumer = kafkaCluster.createConsumer(consumerGroup);
+
 let topics: string[] = [];
 
 if (consumerGroup == "inventory") {

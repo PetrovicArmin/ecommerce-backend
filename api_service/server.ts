@@ -43,7 +43,7 @@ const topics: ITopicConfig[] = [
   }
 ];
 
-kafkaCluster.configureKafkaServer(process.env.NODE_ENV);
+kafkaCluster.configureKafkaServer(process.env.NODE_ENV, 'api-service');
 await kafkaCluster.configureKafkaTopics(topics);
 
 const app: Express = express();

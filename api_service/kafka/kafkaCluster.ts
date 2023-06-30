@@ -1,9 +1,9 @@
-import { Admin, ITopicConfig, ITopicMetadata, Kafka, Message, Producer, TopicMessages } from "kafkajs";
+import { Admin, Consumer, ITopicConfig, ITopicMetadata, Kafka, Message, Producer, TopicMessages } from "kafkajs";
 import ChangeType from "../models/changeType.js";
 
 let kafka: Kafka | undefined = undefined;
 
-const configureKafkaServer = (type: string): void => {
+const configureKafkaServer = (type: string, clientId: string): void => {
     let kafka1Port: string | undefined = process.env.KAFKA1_PORT;
     let kafka2Port: string | undefined = process.env.KAFKA2_PORT;
     let kafka3Port: string | undefined = process.env.KAFKA3_PORT;
@@ -24,7 +24,7 @@ const configureKafkaServer = (type: string): void => {
     }
 
     kafka = new Kafka({
-        clientId: 'api-service',
+        clientId: clientId,
         brokers: [
             `${kafka1Host}:${kafka1Port}`, 
             `${kafka2Host}:${kafka2Port}`, 
@@ -55,6 +55,12 @@ const configureKafkaTopics = async (topics: ITopicConfig[]): Promise<void> => {
         console.error(err);
     }
 };
+
+const createConsumer = (consumerGroup: string): Consumer => {
+    if (kafka == undefined)
+        throw Error('You have not set up kafka server');
+    return kafka.consumer({ groupId: consumerGroup })
+}
 
 const sendMessage = async (topic: string, messages: Message[]): Promise<void> => {
     if (kafka == undefined) 
@@ -109,7 +115,8 @@ const kafkaCluster = {
     sendMessage,
     productsEvent,
     skusEvent,
-    inventoryEvent
+    inventoryEvent,
+    createConsumer
 };
 
 export default kafkaCluster;

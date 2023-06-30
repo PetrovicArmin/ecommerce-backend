@@ -26,6 +26,126 @@ services:
       - kafka1 
       - kafka2 
       - kafka3
+    restart: on-failure
+
+  inventory1:
+    build:
+      context: .
+      dockerfile: ./consumer_service/Dockerfile
+      args:
+        - CONSUMER_TYPE=inventory
+    image: inventory-service  
+    container_name: inventory1
+    ports:
+      - "7900:8080"
+    depends_on:
+      - postgres
+      - kafka1 
+      - kafka2 
+      - kafka3
+    restart: on-failure
+
+  inventory2:
+    build:
+      context: .
+      dockerfile: ./consumer_service/Dockerfile
+      args:
+        - CONSUMER_TYPE=inventory
+    image: inventory-service  
+    container_name: inventory2
+    ports:
+      - "7901:8080"
+    depends_on:
+      - postgres
+      - kafka1 
+      - kafka2 
+      - kafka3
+    restart: on-failure
+
+  inventory3:
+    build:
+      context: .
+      dockerfile: ./consumer_service/Dockerfile
+      args:
+        - CONSUMER_TYPE=inventory
+    image: inventory-service  
+    container_name: inventory3
+    ports:
+      - "7902:8080"
+    depends_on:
+      - postgres
+      - kafka1 
+      - kafka2 
+      - kafka3
+    restart: on-failure
+
+  inventory4:
+    build:
+      context: .
+      dockerfile: ./consumer_service/Dockerfile
+      args:
+        - CONSUMER_TYPE=inventory
+    image: inventory-service  
+    container_name: inventory4
+    ports:
+      - "7903:8080"
+    depends_on:
+      - postgres
+      - kafka1 
+      - kafka2 
+      - kafka3
+    restart: on-failure
+
+  inventory5:
+    build:
+      context: .
+      dockerfile: ./consumer_service/Dockerfile
+      args:
+        - CONSUMER_TYPE=inventory
+    image: inventory-service  
+    container_name: inventory5
+    ports:
+      - "7904:8080"
+    depends_on:
+      - postgres
+      - kafka1 
+      - kafka2 
+      - kafka3
+    restart: on-failure
+
+  skuAndProduct1:
+    build:
+      context: .
+      dockerfile: ./consumer_service/Dockerfile
+      args:
+        - CONSUMER_TYPE=skuAndProduct
+    image: inventory-service  
+    container_name: skuAndProduct1
+    ports:
+      - "7905:8080"
+    depends_on:
+      - postgres
+      - kafka1 
+      - kafka2 
+      - kafka3
+    restart: on-failure
+
+  skuAndProduct2:
+    build:
+      context: .
+      dockerfile: ./consumer_service/Dockerfile
+      args:
+        - CONSUMER_TYPE=skuAndProduct
+    image: inventory-service  
+    container_name: skuAndProduct2
+    ports:
+      - "7906:8080"
+    depends_on:
+      - postgres
+      - kafka1 
+      - kafka2 
+      - kafka3
+    restart: on-failure
 
   kafka1:
     image: confluentinc/cp-kafka
