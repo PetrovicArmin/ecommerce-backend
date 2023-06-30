@@ -66,7 +66,7 @@ Import given collections to postman. You can access the api on ${API_PORT} that 
 
 Collection _mock-api-postman.json_ enables you to see all of the routes, and mock answers of our api server. This will help you understand better the whole structure before you test it.
 
-Collection _tests-example.json_ helps you to test api server. It exists multiple folders, that are structured by 
+Collection _tests-example.json_ helps you to test api server. There exists multiple folders, that are structured by 
 resources on the server, which enables you to easily test all of the routes that can be found in our api.
 
 ### Test running order
@@ -105,6 +105,7 @@ Database is dockerized, and it is created by appripriate .sql dump file. ER Diag
 API is RESTful, which means that we implemented:
 
 * Resource based url representations
+* Stateless routes
 * HATEOAS communcation links provided by server
 * Implicit caching with *Last-Modified* and *If-Modified-Since* headers
 * Password role based authorization with oauth2
@@ -127,6 +128,7 @@ For kafka service, we used KRaft protocol, which enabled us to remove zookeeper 
     * 5 partitions
     * 2 replicas
 
+Messages are assigned to partitions in round-robin fashion. Second option was designing partitions by change types (INSERT, UPDATE, DELETE). But, for example, update can be much more frequent sku operation than insert, or delete. That is the reason why we chose round robin design - because partitioning by keys in this case would make our partitions unbalanced (eg. 1000 messages in partition with key 'UPDATE', and 10 messages in 'INSERT' key partition).
 We used 5 partitions on inventory because it is much more frequent operation than other two logging operations.
 
 In order to put concurrence to work, we made multiple consumers with our docker-compose file. Structure of our kafka service with consumers is conceptually shown below:
