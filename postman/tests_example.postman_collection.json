@@ -1,0 +1,2113 @@
+{
+	"info": {
+		"_postman_id": "e8f84c32-cb31-41f0-ad00-2a0e8b258960",
+		"name": "Ecommerce inventory API tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23685129"
+	},
+	"item": [
+		{
+			"name": "categories",
+			"item": [
+				{
+					"name": "CREATE",
+					"item": [
+						{
+							"name": "create category success",
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "grant_type",
+											"value": "password_credentials",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"basketball\",\r\n    \"description\": \"This is my category for basketball related items\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create category validation error",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Testna kategorija nova moja\",\r\n    \"description\": \"Ovo je opis moje testne kategorije\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create category validation error Copy",
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "grant_type",
+											"value": "password_credentials",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"description\": \"Ovo je opis moje testne kategorije\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create category validation error Copy 2",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"d\",\r\n    \"description\": \"Ovo je opis moje testne kategorije\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"categories"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "READ",
+					"item": [
+						{
+							"name": "read categories success",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"categories"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "READ",
+					"item": [
+						{
+							"name": "read multiple products",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/products?instructionManual=manual",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products"
+									],
+									"query": [
+										{
+											"key": "instructionManual",
+											"value": "manual"
+										},
+										{
+											"key": "id",
+											"value": "34",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read specific product",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "If-Modified-Since",
+										"value": "Wed, 17 May 2017 04:44:36 GMT",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_URL}}/products/1",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read specific product cached",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "If-Modified-Since",
+										"value": "Tue, 27 Jun 2023 17:37:38 GMT",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_URL}}/products/1",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read specific product not found",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/products/199",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										"199"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read specific product validation error",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/products/199wd",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										"199wd"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read product categories successfull",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "If-Modified-Since",
+										"value": "Sun, 25 Jun 2023 21:45:18 GMT",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_URL}}/products/:id/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id",
+										"categories"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read product categories cached",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "If-Modified-Since",
+										"value": "Mon, 26 Jun 2023 20:10:51 GMT",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_URL}}/products/:id/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id",
+										"categories"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read product categories product not found",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/products/:id/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id",
+										"categories"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "11"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read product categories categoriees not found",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/products/:id/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id",
+										"categories"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "34"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "CREATE",
+					"item": [
+						{
+							"name": "create product success",
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "grant_type",
+											"value": "password_credentials",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"basketball items\",\r\n    \"instructionManual\": \"manual for using basketball items\",\r\n    \"description\": \"this is the category for all of the basketball items\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/products/",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create product validation error",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"New product\",\r\n    \"instructionManual\": \"manual\",\r\n    \"description\": \"description\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/products",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create product validation error 1",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"N\",\r\n    \"instructionManual\": \"manual\",\r\n    \"description\": \"description\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/products",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create category for product success",
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "grant_type",
+											"value": "password_credentials",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"categoryIds\": [\r\n        5\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/products/:id/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id",
+										"categories"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create category for product not found",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"categoryIds\": [\r\n        1,\r\n        2\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/products/:id/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id",
+										"categories"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "124"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create category for product - category not found",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"categoryIds\": [\r\n        1,\r\n        2,\r\n        234\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/products/:id/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id",
+										"categories"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create category for product - validation error",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"categoryIds\": [\r\n        3\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/products/:id/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id",
+										"categories"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "UPDATE",
+					"item": [
+						{
+							"name": "update products success",
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "grant_type",
+											"value": "password_credentials",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Basketball items\",\r\n    \"instructionManual\": \"This is more detailed instruction for using basketball items in general\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/products/4",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update products non existent",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Tshirt\",\r\n    \"instructionManual\": \"Take this net and put both of the ends on two poles. Congratulations, you now have table tennis net that is ready to be used.\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/products/265",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										"265"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update products validation error",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"T\",\r\n    \"instructionManual\": \"Take this net and put both of the ends on two poles. Congratulations, you now have table tennis net that is ready to be used.\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/products/2",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "delete product successfully",
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "tokenName",
+											"value": "",
+											"type": "string"
+										},
+										{
+											"key": "grant_type",
+											"value": "password_credentials",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/products/4",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete product non existent",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/products/256",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										"256"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete product categories success",
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "grant_type",
+											"value": "password_credentials",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/products/:id/categories?categories=[3]",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id",
+										"categories"
+									],
+									"query": [
+										{
+											"key": "categories",
+											"value": "[3]"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete product categories product not existent",
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "tokenName",
+											"value": "",
+											"type": "string"
+										},
+										{
+											"key": "grant_type",
+											"value": "password_credentials",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/products/:id/categories?categories=[6]",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id",
+										"categories"
+									],
+									"query": [
+										{
+											"key": "categories",
+											"value": "[6]"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete product categories categories do not exist",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/products/:id/categories?categories=[1,2,334]",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id",
+										"categories"
+									],
+									"query": [
+										{
+											"key": "categories",
+											"value": "[1,2,334]"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "34"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete product categories validation errors",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/products/:id/categories?categories=[1,2,3,,]",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id",
+										"categories"
+									],
+									"query": [
+										{
+											"key": "categories",
+											"value": "[1,2,3,,]"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "skus",
+			"item": [
+				{
+					"name": "CREATE",
+					"item": [
+						{
+							"name": "Create sku success",
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "tokenName",
+											"value": "",
+											"type": "string"
+										},
+										{
+											"key": "grant_type",
+											"value": "password_credentials",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"productId\": 3,\r\n    \"skuCode\": \"abcjljs311231\",\r\n    \"color\": \"blue\",\r\n    \"weight\": 23.42,\r\n    \"countryOfOrigin\": \"Bosnia and Herzegovina\",\r\n    \"price\": 12.22,\r\n    \"quantityInStock\": 12,\r\n    \"size\": \"XXL\",\r\n    \"details\": \"More details about stock keeping unit\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/skus",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"skus"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create sku validation error",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"productId\": \"1231\",\r\n    \"skuCode\": \"sdfjljs31133\",\r\n    \"color\": \"blue\",\r\n    \"weight\": \"23.42\",\r\n    \"countryOfOrigin\": \"Bosnia and Herzegovina\",\r\n    \"price\": \"12.22\",\r\n    \"quantityInStock\": \"12\",\r\n    \"size\": \"XXL\",\r\n    \"details\": \"More details about stock keeping unit\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/skus",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"skus"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "READ",
+					"item": [
+						{
+							"name": "read multiple skus success",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/skus",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"skus"
+									],
+									"query": [
+										{
+											"key": "productId",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "id",
+											"value": "5",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read multiple skus not existent",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/skus?productId=123",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"skus"
+									],
+									"query": [
+										{
+											"key": "productId",
+											"value": "123"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read sku success",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/skus/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"skus",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read sku success cached",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "If-modified-Since",
+										"value": "Tue, 27 Jun 2023 10:18:14 GMT",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_URL}}/skus/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"skus",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read sku not found",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "If-modified-Since",
+										"value": "Tue, 27 Jun 2023 06:20:00 GMT",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_URL}}/skus/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"skus",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "123"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "UPDATE",
+					"item": [
+						{
+							"name": "update sku success",
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "grant_type",
+											"value": "password_credentials",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"color\": \"blue\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/skus/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"skus",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update sku not found",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"color\": \"red\" \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/skus/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"skus",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "123"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update sku validation error",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"skuCode\": \"1\" \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/skus/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"skus",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "delete sku success",
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "grant_type",
+											"value": "password_credentials",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/skus/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"skus",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete sku not found",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/skus/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"skus",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "123"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "CREATE",
+					"item": [
+						{
+							"name": "create user success",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"esmo\",\r\n    \"lastName\": \"esmic\",\r\n    \"username\": \"esmo1\",\r\n    \"password\": \"mojasifra\",\r\n    \"email\": \"esmo1@gmail.com\",\r\n    \"userType\": \"SUPPLY_ANALYST\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/users",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create user validation error",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"armin1\",\r\n    \"lastName\": \"petrovic\",\r\n    \"username\": \"apetrovic1\",\r\n    \"password\": \"mojasifra\",\r\n    \"email\": \"apetrovic1@etf.unsa.ba\",\r\n    \"userType\": \"SHOP_WORKER\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/users",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "READ",
+					"item": [
+						{
+							"name": "read multiple users success",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/users",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users"
+									],
+									"query": [
+										{
+											"key": "userType",
+											"value": "SUPPLY_ANALYST",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read multiple users non existent",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/users?userType=NON_EXISTENT",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users"
+									],
+									"query": [
+										{
+											"key": "userType",
+											"value": "NON_EXISTENT"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read user success",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/users/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read user cached",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "If-Modified-Since",
+										"value": "Tue, 27 Jun 2023 08:45:33 GMT",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_URL}}/users/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read user non existent",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "If-Modified-Since",
+										"value": "Tue, 27 Jun 2023 08:45:33 GMT",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_URL}}/users/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "11000"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "UPDATE",
+					"item": [
+						{
+							"name": "update user success",
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "grant_type",
+											"value": "password_credentials",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userType\": \"SUPPLY_MANAGER\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/users/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update user non existent",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userType\": \"SUPPLY_MANAGER\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/users/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "11101"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update user validation error",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userType\": \"something that cannot be used\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/users/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "11101"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "delete user success",
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "grant_type",
+											"value": "password_credentials",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/users/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete user non existent",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/users/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "11001"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "AUTH",
+					"item": [
+						{
+							"name": "Authentication using password grant success",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "esmo1",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "mojasifra",
+											"type": "text"
+										},
+										{
+											"key": "grant_type",
+											"value": "password",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "null",
+											"type": "text"
+										},
+										{
+											"key": "client_secret",
+											"value": "null",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{API_URL}}/users/login",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Authorization using password grant fail",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "asmo1",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "mojasifr",
+											"type": "text"
+										},
+										{
+											"key": "grant_type",
+											"value": "password",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "null",
+											"type": "text"
+										},
+										{
+											"key": "client_secret",
+											"value": "null",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{API_URL}}/users/login",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "logs",
+			"item": [
+				{
+					"name": "products",
+					"item": [
+						{
+							"name": "read products success",
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "grant_type",
+											"value": "password_credentials",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/logs/products",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"logs",
+										"products"
+									],
+									"query": [
+										{
+											"key": "changeType",
+											"value": "DELETE_ROW",
+											"disabled": true
+										},
+										{
+											"key": "productId",
+											"value": "4",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read products non existent",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/logs/products?productId=1011001",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"logs",
+										"products"
+									],
+									"query": [
+										{
+											"key": "productId",
+											"value": "1011001"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "skus",
+					"item": [
+						{
+							"name": "read skus success",
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "grant_type",
+											"value": "password_credentials",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/logs/skus?skuId=6",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"logs",
+										"skus"
+									],
+									"query": [
+										{
+											"key": "skuId",
+											"value": "6"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read skus non existent",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/logs/skus?skuId=1011001",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"logs",
+										"skus"
+									],
+									"query": [
+										{
+											"key": "skuId",
+											"value": "1011001"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "inventory",
+					"item": [
+						{
+							"name": "read inventory success",
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "grant_type",
+											"value": "password_credentials",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/logs/inventory",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"logs",
+										"inventory"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read inventory non existent",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/logs/inventory?skuId=1011001",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"logs",
+										"inventory"
+									],
+									"query": [
+										{
+											"key": "skuId",
+											"value": "1011001"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "API_URL",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}

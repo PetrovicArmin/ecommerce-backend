@@ -1,0 +1,3302 @@
+{
+	"info": {
+		"_postman_id": "57d44d7d-5779-4fbf-bf5e-06797b8fff64",
+		"name": "Ecommerce inventory mock API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23685129"
+	},
+	"item": [
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "Create products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{arminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/products",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create products success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"New product\",\r\n    \"instructionManual\": \"manual\",\r\n    \"description\": \"description\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/products",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Last-Modified",
+									"value": "Tuesday, 6/7/2023, 15:10:12",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"product\": {\r\n        \"id\": \"value\",\r\n        \"name\": \"New product\",\r\n        \"instructionManual\": \"manual\",\r\n        \"description\": \"description\"\r\n    },\r\n    \"links\": [\r\n        {\r\n            \"key\": \"specify later!\"\r\n        }\r\n    ]\r\n}"
+						},
+						{
+							"name": "Create products fail",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"instructionManual\": \"manual\",\r\n    \"description\": \"description\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/products",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n\r\n    \"error\": \"Required field 'name' not found\",\r\n    \"links\": [\r\n        {\r\n            \"key\": \"specify later!\"\r\n        }\r\n    ]\r\n}"
+						},
+						{
+							"name": "Create products validation error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"123\",\r\n    \"instructionManual\": \"manual\",\r\n    \"description\": \"description\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/products",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"error\": \"Validation error with some of the parameters - error text different for each and every validation error\",\r\n    \"links\": [\r\n        {\r\n            \"key\": \"specify later!\"\r\n        }\r\n    ]\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Read products",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "If-Modified-Since",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/products/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"products",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Read products",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "If-Modified-Since",
+										"value": "datetime value",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_URL}}/products/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Last-Modified",
+									"value": "datetime value",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"product\": {\r\n        \"id\": \"value\",\r\n        \"name\": \"New product\",\r\n        \"instructionManual\": \"manual\",\r\n        \"description\": \"description\"\r\n    },\r\n    \"links\": [\r\n        {\r\n            \"key\": \"specify later!\"\r\n        }\r\n    ]\r\n}"
+						},
+						{
+							"name": "Read products cache",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "If-Modified-Since",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_URL}}/products/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Not Modified",
+							"code": 304,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"links\": [\r\n        {\r\n            \"value\": \"set later!\"\r\n        }\r\n    ]\r\n}"
+						},
+						{
+							"name": "Read products not found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "If-Modified-Since",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_URL}}/products/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"error\": \"Resource 'product' with id of $id not found\",\r\n    \"links\": [\r\n        {\r\n            \"value\": \"set later!\"\r\n        }\r\n    ]\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Update products",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/products/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"products",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update products success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"value\",\r\n    \"instructionManual\": \"value\",\r\n    \"description\": \"value\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/products/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Last-Modified",
+									"value": "value",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"product\": {\r\n        \"id\": \"value\",\r\n        \"name\": \"value\",\r\n        \"instructionManual\": \"value\",\r\n        \"description\": \"value\"\r\n    },\r\n    \"links\": [\r\n        {\r\n            \"value\": \"fill later\"\r\n        }\r\n    ]\r\n}"
+						},
+						{
+							"name": "Update products - non existent",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"value\",\r\n    \"instructionManual\": \"value\",\r\n    \"description\": \"value\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/products/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"error\": \"Resource 'product' with id of $id not found\",\r\n    \"links\": [\r\n        {\r\n            \"value\": \"fill later\"\r\n        }\r\n    ]\r\n}"
+						},
+						{
+							"name": "Update products - validation error",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"value\",\r\n    \"instructionManual\": \"value\",\r\n    \"description\": \"value\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/products/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"error\": \"Message for some kind of error in body of the request\",\r\n    \"links\": [\r\n        {\r\n            \"value\": \"fill later\"\r\n        }\r\n    ]\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete products",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/products/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"products",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete products success",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/products/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"message\": \"Resource 'product' with id of $id successfully deleted\",\r\n    \"links\": [\r\n        {\r\n            \"rel\": \"define later\"\r\n        }\r\n    ]\r\n}"
+						},
+						{
+							"name": "Delete products non existent",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/products/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"error\": \"Resource 'product' with id of $id does not exist\",\r\n    \"links\": [\r\n        {\r\n            \"rel\": \"define later\"\r\n        }\r\n    ]\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Add categories",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"categoryIds\": [\r\n        1,\r\n        2,\r\n        3\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/products/:id/categories",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"products",
+								":id",
+								"categories"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Add categories success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"categoryIds\": [\r\n        1,\r\n        2,\r\n        3\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/products/:id/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id",
+										"categories"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Last-Modified",
+									"value": "value",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"message\": \"Array of resources 'category' successfully connected to resource 'product'\",\r\n    \"links\": []\r\n}"
+						},
+						{
+							"name": "Add categories non existent product",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"categoryIds\": [\r\n        1,\r\n        2,\r\n        3,\r\n        3423\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/products/:id/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id",
+										"categories"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"error\": \"Resource 'product' with id of $id does not exist\",\r\n    \"links\": []\r\n}"
+						},
+						{
+							"name": "Add categories non existent category",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"categoryIds\": [\r\n        1,\r\n        2,\r\n        3,\r\n        3423\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/products/:id/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id",
+										"categories"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"error\": \"Resource 'category' with id of $category_id does not exist\",\r\n    \"links\": []\r\n}"
+						},
+						{
+							"name": "Add categories validation error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"categoryIds\": [\r\n        1,\r\n        2,\r\n        3,\r\n        3423\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/products/:id/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id",
+										"categories"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"error\": \"Validation error with some of the information in the body\",\r\n    \"links\": []\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Read categories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "If-Modified-Since",
+								"value": "value",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/products/:id/categories",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"products",
+								":id",
+								"categories"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Read categories success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "If-Modified-Since",
+										"value": "value",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_URL}}/products/:id/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id",
+										"categories"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Last-Modified",
+									"value": "value",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"categories\": [\r\n        {\r\n            \"id\": \"value\",\r\n            \"name\": \"value\",\r\n            \"description\": \"value\"\r\n        }\r\n    ],\r\n    \"links\": []\r\n}"
+						},
+						{
+							"name": "Read categories cached",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "If-Modified-Since",
+										"value": "value",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_URL}}/products/:id/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id",
+										"categories"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Not Modified",
+							"code": 304,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"links\": []\r\n}"
+						},
+						{
+							"name": "Read categories product not found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "If-Modified-Since",
+										"value": "value",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_URL}}/products/:id/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id",
+										"categories"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"error\": \"Resource 'product' with id of $id not found\",\r\n    \"links\": []\r\n}"
+						},
+						{
+							"name": "Read categories categories not found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "If-Modified-Since",
+										"value": "value",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_URL}}/products/:id/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id",
+										"categories"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"error\": \"Resource 'product' with id of $id does not have categories\",\r\n    \"links\": []\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete categories",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/products/:id/categories?categories=[1,2,3]",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"products",
+								":id",
+								"categories"
+							],
+							"query": [
+								{
+									"key": "categories",
+									"value": "[1,2,3]"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete categories success",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/products/:id/categories?categories=[1,2,3]",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id",
+										"categories"
+									],
+									"query": [
+										{
+											"key": "categories",
+											"value": "[1,2,3]"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Last-Modified",
+									"value": "value",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"message\": \"Categories successfully deleted from resource 'product' of id $id\",\r\n    \"links\": []\r\n}"
+						},
+						{
+							"name": "Delete categories product not existent",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/products/:id/categories?categories=[1,2,3]",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id",
+										"categories"
+									],
+									"query": [
+										{
+											"key": "categories",
+											"value": "[1,2,3]"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"error\": \"Resource 'product' with id of $id does not exist\",\r\n    \"links\": []\r\n}"
+						},
+						{
+							"name": "Delete categories validation errors",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/products/:id/categories?categories=[1,2,3]",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										":id",
+										"categories"
+									],
+									"query": [
+										{
+											"key": "categories",
+											"value": "[1,2,3]"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"error\": \"Some kind of validation error\",\r\n    \"links\": []\r\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "categories",
+			"item": [
+				{
+					"name": "Create categories",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"value\",\r\n    \"description\": \"value\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/categories",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Post categories success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"value\",\r\n    \"description\": \"value\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"categories"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Last-Modified",
+									"value": "value",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"category\": {\r\n        \"id\": \"value\",\r\n        \"name\": \"value\",\r\n        \"description\": \"value\"\r\n    },\r\n    \"links\": []\r\n}"
+						},
+						{
+							"name": "Post categories name not found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"description\": \"value\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"categories"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"error\": \"Required parameter 'name' not found in request body\",\r\n    \"links\": []\r\n}"
+						},
+						{
+							"name": "Post categories validation error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"123\",\r\n    \"description\": \"value\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"categories"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"error\": \"Validation error for some of the paramter!\",\r\n    \"links\": []\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Read categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/categories",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Read categories success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "If-Modified-Since",
+										"value": "value",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{API_URL}}/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"categories"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Last-Modified",
+									"value": "value",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"categories\": [\r\n        {\r\n            \"category\": {\r\n\r\n            },\r\n            \"links\": []\r\n        },\r\n        {\r\n            \"category\": {\r\n                \r\n            },\r\n            \"links\": []\r\n        }\r\n    ]\r\n}"
+						},
+						{
+							"name": "Read categories no categories",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "If-Modified-Since",
+										"value": "value",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_URL}}/categories",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"categories"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"error\": \"Resource 'categories' does not exist on server!\"\r\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "skus",
+			"item": [
+				{
+					"name": "Create skus",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productId\": \"value\",\r\n    \"skuCode\": \"value\",\r\n    \"color\": \"value\",\r\n    \"weight\": \"value\",\r\n    \"countryOfOrigin\": \"value\",\r\n    \"price\": \"value\",\r\n    \"quantityInStock\": \"value\",\r\n    \"size\": \"value\",\r\n    \"details\": \"value\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/skus",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"skus"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create sku success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"productId\": \"value\",\r\n    \"skuCode\": \"value\",\r\n    \"color\": \"value\",\r\n    \"weight\": \"value\",\r\n    \"countryOfOrigin\": \"value\",\r\n    \"price\": \"value\",\r\n    \"quantityInStock\": \"value\",\r\n    \"size\": \"value\",\r\n    \"details\": \"value\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/skus",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"skus"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Last-Modified",
+									"value": "value",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"sku\": {\r\n        \"id\": \"value\",\r\n        \"productId\": \"value\",\r\n        \"skuCode\": \"value\",\r\n        \"color\": \"value\",\r\n        \"weight\": \"value\",\r\n        \"countryOfOrigin\": \"value\",\r\n        \"price\": \"value\",\r\n        \"quantityInStock\": \"value\",\r\n        \"size\": \"value\",\r\n        \"details\": \"value\"\r\n    },\r\n    \"links\": []\r\n}"
+						},
+						{
+							"name": "Create sku success validation error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"productId\": \"value\",\r\n    \"skuCode\": \"value\",\r\n    \"color\": \"value\",\r\n    \"weight\": \"value\",\r\n    \"countryOfOrigin\": \"value\",\r\n    \"price\": \"value\",\r\n    \"quantityInStock\": \"value\",\r\n    \"size\": \"value\",\r\n    \"details\": \"value\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/skus",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"skus"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"error\": \"sku code not unique, price not included, quantity not included, and other bad request / validation errors.\",\r\n    \"links\": []\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Read skus",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "If-Modified-Since",
+								"value": "value",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/skus/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"skus",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Read skus success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "If-Modified-Since",
+										"value": "value",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_URL}}/skus/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"skus",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Last-Modified",
+									"value": "value",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"sku\": {\r\n        \"id\": \"value\",\r\n        \"productId\": \"value\",\r\n        \"skuCode\": \"value\",\r\n        \"color\": \"value\",\r\n        \"weight\": \"value\",\r\n        \"countryOfOrigin\": \"value\",\r\n        \"price\": \"value\",\r\n        \"quantityInStock\": \"value\",\r\n        \"size\": \"value\",\r\n        \"details\": \"value\"\r\n    },\r\n    \"links\": []\r\n}"
+						},
+						{
+							"name": "Read skus cached",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "If-Modified-Since",
+										"value": "value",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_URL}}/skus/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"skus",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Not Modified",
+							"code": 304,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"links\": []\r\n}"
+						},
+						{
+							"name": "Read skus not found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "If-Modified-Since",
+										"value": "value",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_URL}}/skus/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"skus",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"error\": \"Resource 'sku' with id of $id not found\",\r\n    \"links\": []\r\n}"
+						},
+						{
+							"name": "Read skus by search",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "If-Modified-Since",
+										"value": "value",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_URL}}/skus?productId=1&description=moj opis",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"skus"
+									],
+									"query": [
+										{
+											"key": "productId",
+											"value": "1"
+										},
+										{
+											"key": "description",
+											"value": "moj opis"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"skus\": [\n        {\n            \"sku\": {\n                \"id\": \"value\",\n                \"productId\": \"value\",\n                \"skuCode\": \"value\",\n                \"color\": \"value\",\n                \"weight\": \"value\",\n                \"countryOfOrigin\": \"value\",\n                \"price\": \"value\",\n                \"quantityInStock\": \"value\",\n                \"size\": \"value\",\n                \"details\": \"value\"\n            },\n            \"links\": []\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Update skus",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/skus/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"skus",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update skus success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"productId\": \"value\",\r\n    \"skuCode\": \"value\",\r\n    \"color\": \"value\",\r\n    \"weight\": \"value\",\r\n    \"countryOfOrigin\": \"value\",\r\n    \"price\": \"value\",\r\n    \"quantityInStock\": \"value\",\r\n    \"size\": \"value\",\r\n    \"details\": \"value\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/skus/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"skus",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Last-Modified",
+									"value": "value",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"sku\": {\n        \"id\": \"value\",\n        \"productId\": \"value\",\n        \"skuCode\": \"value\",\n        \"color\": \"value\",\n        \"weight\": \"value\",\n        \"countryOfOrigin\": \"value\",\n        \"price\": \"value\",\n        \"quantityInStock\": \"value\",\n        \"size\": \"value\",\n        \"details\": \"value\"\n    },\n    \"links\": []\n}"
+						},
+						{
+							"name": "Update skus not found",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"productId\": \"value\",\r\n    \"skuCode\": \"value\",\r\n    \"color\": \"value\",\r\n    \"weight\": \"value\",\r\n    \"countryOfOrigin\": \"value\",\r\n    \"price\": \"value\",\r\n    \"quantityInStock\": \"value\",\r\n    \"size\": \"value\",\r\n    \"details\": \"value\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/skus/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"skus",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Resource 'sku' with id of $id could not be found\",\n    \"links\": []\n}"
+						},
+						{
+							"name": "Update skus validation error",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"productId\": \"value\",\r\n    \"skuCode\": \"value\",\r\n    \"color\": \"value\",\r\n    \"weight\": \"value\",\r\n    \"countryOfOrigin\": \"value\",\r\n    \"price\": \"value\",\r\n    \"quantityInStock\": \"value\",\r\n    \"size\": \"value\",\r\n    \"details\": \"value\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/skus/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"skus",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Some kind of validation error\",\n    \"links\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete skus",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/skus/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"skus",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete skus success",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/skus/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"skus",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"message\": \"SKU with id of $id successfully deleted\",\r\n    \"links\": []\r\n}"
+						},
+						{
+							"name": "Delete skus non existent",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/skus/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"skus",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"error\": \"SKU with id of $id does not exist\",\r\n    \"links\": []\r\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "Create users",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"value\",\r\n    \"lastName\": \"value\",\r\n    \"username\": \"value\",\r\n    \"password\": \"value\",\r\n    \"email\": \"value\",\r\n    \"userType\": \"value\",\r\n    \"accessToken\": \"value\",\r\n    \"refreshToken\": \"value\",\r\n    \"lastModified\": \"value\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/users",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create users success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"value\",\r\n    \"lastName\": \"value\",\r\n    \"username\": \"value\",\r\n    \"password\": \"value\",\r\n    \"email\": \"value\",\r\n    \"userType\": \"value\",\r\n    \"accessToken\": \"value\",\r\n    \"refreshToken\": \"value\",\r\n    \"lastModified\": \"value\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/users",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Last-Modified",
+									"value": "value",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"user\": {\r\n        \"id\": \"value\",\r\n        \"firstName\": \"value\",\r\n        \"lastName\": \"value\",\r\n        \"username\": \"value\",\r\n        \"password\": \"value\",\r\n        \"email\": \"value\",\r\n        \"userType\": \"value\",\r\n        \"accessToken\": \"value\",\r\n        \"refreshToken\": \"value\",\r\n        \"lastModified\": \"value\"\r\n    },\r\n    \"links\": []\r\n}"
+						},
+						{
+							"name": "Create users validation error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"value\",\r\n    \"lastName\": \"value\",\r\n    \"username\": \"value\",\r\n    \"password\": \"value\",\r\n    \"email\": \"value\",\r\n    \"userType\": \"value\",\r\n    \"accessToken\": \"value\",\r\n    \"refreshToken\": \"value\",\r\n    \"lastModified\": \"value\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/users",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"error\": \"Some validation error\",\r\n    \"links\": []\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Read users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/users/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Read users success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "If-Modified-Since",
+										"value": "value",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_URL}}/users/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Last-Modified",
+									"value": "value",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": \"value\",\n        \"firstName\": \"value\",\n        \"lastName\": \"value\",\n        \"username\": \"value\",\n        \"password\": \"value\",\n        \"email\": \"value\",\n        \"userType\": \"value\",\n        \"accessToken\": \"value\",\n        \"refreshToken\": \"value\",\n        \"lastModified\": \"value\"\n    },\n    \"links\": []\n}"
+						},
+						{
+							"name": "Read users cached",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "If-Modified-Since",
+										"value": "value",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_URL}}/users/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Not Modified",
+							"code": 304,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"links\": []\n}"
+						},
+						{
+							"name": "Read users non existent",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "If-Modified-Since",
+										"value": "value",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{API_URL}}/users/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"User with id of $id does not exist\",\n    \"links\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "Update users",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"value\",\r\n    \"lastName\": \"value\",\r\n    \"username\": \"value\",\r\n    \"password\": \"value\",\r\n    \"email\": \"value\",\r\n    \"userType\": \"value\",\r\n    \"accessToken\": \"value\",\r\n    \"refreshToken\": \"value\",\r\n    \"lastModified\": \"value\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/users/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update users success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"value\",\r\n    \"lastName\": \"value\",\r\n    \"username\": \"value\",\r\n    \"password\": \"value\",\r\n    \"email\": \"value\",\r\n    \"userType\": \"value\",\r\n    \"accessToken\": \"value\",\r\n    \"refreshToken\": \"value\",\r\n    \"lastModified\": \"value\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/users/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Last-Modified",
+									"value": "value",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"user\": {\r\n        \"id\": \"value\",\r\n        \"firstName\": \"value\",\r\n        \"lastName\": \"value\",\r\n        \"username\": \"value\",\r\n        \"password\": \"value\",\r\n        \"email\": \"value\",\r\n        \"userType\": \"value\",\r\n        \"accessToken\": \"value\",\r\n        \"refreshToken\": \"value\",\r\n        \"lastModified\": \"value\"\r\n    },\r\n    \"links\": []\r\n}"
+						},
+						{
+							"name": "Update users non existent user",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"value\",\r\n    \"lastName\": \"value\",\r\n    \"username\": \"value\",\r\n    \"password\": \"value\",\r\n    \"email\": \"value\",\r\n    \"userType\": \"value\",\r\n    \"accessToken\": \"value\",\r\n    \"refreshToken\": \"value\",\r\n    \"lastModified\": \"value\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/users/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"error\": \"User with id of $id does not exist\",\r\n    \"links\": []\r\n}"
+						},
+						{
+							"name": "Update users validation error",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"value\",\r\n    \"lastName\": \"value\",\r\n    \"username\": \"value\",\r\n    \"password\": \"value\",\r\n    \"email\": \"value\",\r\n    \"userType\": \"value\",\r\n    \"accessToken\": \"value\",\r\n    \"refreshToken\": \"value\",\r\n    \"lastModified\": \"value\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/users/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"error\": \"Some kind of validation error\",\r\n    \"links\": []\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete users",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/users/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete users success",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/users/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"message\": \"User with id of $id successfully deleted\",\r\n    \"links\": []\r\n}"
+						},
+						{
+							"name": "Delete users non existent user",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/users/:id",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"error\": \"User with id of $id does not exist\",\r\n    \"links\": []\r\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "logs",
+			"item": [
+				{
+					"name": "Read product changes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/logs/products?productId=value&userId=value&changeType=value&changeDateTime=value",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"logs",
+								"products"
+							],
+							"query": [
+								{
+									"key": "productId",
+									"value": "value"
+								},
+								{
+									"key": "userId",
+									"value": "value"
+								},
+								{
+									"key": "changeType",
+									"value": "value"
+								},
+								{
+									"key": "changeDateTime",
+									"value": "value"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Read product changes success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/products/logs?productId=value&userId=value&changeType=value&changeDateTime=value",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										"logs"
+									],
+									"query": [
+										{
+											"key": "productId",
+											"value": "value"
+										},
+										{
+											"key": "userId",
+											"value": "value"
+										},
+										{
+											"key": "changeType",
+											"value": "value"
+										},
+										{
+											"key": "changeDateTime",
+											"value": "value"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"logs\": [\r\n        {\r\n            \"id\": \"value\",\r\n            \"productId\": \"value\",\r\n            \"changedByUserId\": \"value\",\r\n            \"changeType\": \"value\",\r\n            \"changeDateTime\": \"value\"\r\n        }\r\n    ],\r\n    \"links\": []\r\n}"
+						},
+						{
+							"name": "Read product changes non existent",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/products/logs?productId=value&userId=value&changeType=value&changeDateTime=value",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"products",
+										"logs"
+									],
+									"query": [
+										{
+											"key": "productId",
+											"value": "value"
+										},
+										{
+											"key": "userId",
+											"value": "value"
+										},
+										{
+											"key": "changeType",
+											"value": "value"
+										},
+										{
+											"key": "changeDateTime",
+											"value": "value"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"error\": \"Product logs with given specifications do not exist\",\r\n    \"links\": []\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Read sku changes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/logs/skus?skuId=value&userId=value&changeType=value&changeDateTime=value",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"logs",
+								"skus"
+							],
+							"query": [
+								{
+									"key": "skuId",
+									"value": "value"
+								},
+								{
+									"key": "userId",
+									"value": "value"
+								},
+								{
+									"key": "changeType",
+									"value": "value"
+								},
+								{
+									"key": "changeDateTime",
+									"value": "value"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Read sku changes success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/skus/logs?skuId=value&userId=value&changeType=value&changeDateTime=value",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"skus",
+										"logs"
+									],
+									"query": [
+										{
+											"key": "skuId",
+											"value": "value"
+										},
+										{
+											"key": "userId",
+											"value": "value"
+										},
+										{
+											"key": "changeType",
+											"value": "value"
+										},
+										{
+											"key": "changeDateTime",
+											"value": "value"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"logs\": [\r\n        {\r\n            \"id\": \"value\",\r\n            \"skuId\": \"value\",\r\n            \"changedByUserId\": \"value\",\r\n            \"changeType\": \"value\",\r\n            \"changeDateTime\": \"value\"\r\n        }\r\n    ],\r\n    \"links\": []\r\n}"
+						},
+						{
+							"name": "Read sku changes non existent",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/skus/logs?skuId=value&userId=value&changeType=value&changeDateTime=value",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"skus",
+										"logs"
+									],
+									"query": [
+										{
+											"key": "skuId",
+											"value": "value"
+										},
+										{
+											"key": "userId",
+											"value": "value"
+										},
+										{
+											"key": "changeType",
+											"value": "value"
+										},
+										{
+											"key": "changeDateTime",
+											"value": "value"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"error\": \"SKU logs with given specifications do not exist\",\r\n    \"links\": []\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Read sku inventory changes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/logs/inventory?skuId=value&userId=value&changeType=value&changeDateTime=value&quantityChange=value",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"logs",
+								"inventory"
+							],
+							"query": [
+								{
+									"key": "skuId",
+									"value": "value"
+								},
+								{
+									"key": "userId",
+									"value": "value"
+								},
+								{
+									"key": "changeType",
+									"value": "value"
+								},
+								{
+									"key": "changeDateTime",
+									"value": "value"
+								},
+								{
+									"key": "quantityChange",
+									"value": "value"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Read sku inventory changes success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/inventory/logs?skuId=value&userId=value&changeType=value&changeDateTime=value&quantityChange=value",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"inventory",
+										"logs"
+									],
+									"query": [
+										{
+											"key": "skuId",
+											"value": "value"
+										},
+										{
+											"key": "userId",
+											"value": "value"
+										},
+										{
+											"key": "changeType",
+											"value": "value"
+										},
+										{
+											"key": "changeDateTime",
+											"value": "value"
+										},
+										{
+											"key": "quantityChange",
+											"value": "value"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"logs\": [\r\n        {\r\n            \"id\": \"value\",\r\n            \"skuId\": \"value\",\r\n            \"changedByUserId\": \"value\",\r\n            \"changeType\": \"value\",\r\n            \"changeDateTime\": \"value\",\r\n            \"quantityChange\": \"value\"\r\n        }\r\n    ],\r\n    \"links\": []\r\n}"
+						},
+						{
+							"name": "Read sku inventory changes non existent",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/inventory/logs?skuId=value&userId=value&changeType=value&changeDateTime=value&quantityChange=value",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"inventory",
+										"logs"
+									],
+									"query": [
+										{
+											"key": "skuId",
+											"value": "value"
+										},
+										{
+											"key": "userId",
+											"value": "value"
+										},
+										{
+											"key": "changeType",
+											"value": "value"
+										},
+										{
+											"key": "changeDateTime",
+											"value": "value"
+										},
+										{
+											"key": "quantityChange",
+											"value": "value"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"error\": \"Inventory logs with given specification do not exist\",\r\n    \"links\": []\r\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "AUTH",
+			"item": [
+				{
+					"name": "authenticating users based on password grant",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "novalic1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "mojasifra",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "null",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "null",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{API_URL}}/users/login",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "authenticating users based on password grant success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "novalic1",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "mojasifra",
+											"type": "text"
+										},
+										{
+											"key": "grant_type",
+											"value": "password",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "null",
+											"type": "text"
+										},
+										{
+											"key": "client_secret",
+											"value": "null",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{API_URL}}/users/login",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"accessToken\": \"32f631d3653969b9d6de71ae97ecc4cad88bc466\",\n    \"accessTokenExpiresAt\": \"2023-06-28T22:24:24.185Z\",\n    \"refreshToken\": \"078f5a585011d79e4439be65f48f8370e27bb9ad\",\n    \"refreshTokenExpiresAt\": \"2023-07-11T22:24:24.185Z\",\n    \"client\": {\n        \"id\": \"client's id\"\n    },\n    \"user\": {\n        \"id\": \"user's id\"\n    }\n}"
+						},
+						{
+							"name": "authenticating users based on password error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "novalic1",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "mojasifra",
+											"type": "text"
+										},
+										{
+											"key": "grant_type",
+											"value": "password",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "null",
+											"type": "text"
+										},
+										{
+											"key": "client_secret",
+											"value": "null",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{API_URL}}/users/login",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"some error about invalid credentials\"\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "API_URL",
+			"value": "http://localhost:8080"
+		}
+	]
+}
