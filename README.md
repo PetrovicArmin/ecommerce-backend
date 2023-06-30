@@ -129,7 +129,8 @@ We used 5 partitions on inventory because it is much more frequent operation tha
 
 In order to put concurrence to work, we made multiple consumers with our docker-compose file. Structure of our kafka service with consumers is conceptually shown below:
 
-![drawing](https://github.com/PetrovicArmin/ecommerce-backend/assets/89392479/a09b368f-a588-4940-9186-90bdca66ce8c)
+![drawing](https://github.com/PetrovicArmin/ecommerce-backend/assets/89392479/6e7f175a-0a88-4dbc-acc5-7d2ea1240c36)
+
 
 Keep in mind that above is logical representation of the system. Multiple brokers and replication factors make system much more different - implementation-wise, which means much more reliable and efficient system.
 
