@@ -98,6 +98,40 @@ Database is dockerized, and it is created by appripriate .sql dump file. ER Diag
 
 ![database](https://github.com/PetrovicArmin/ecommerce-backend/assets/89392479/1aebde47-8a30-47a8-b790-a9b01e224506)
 
+## API
+
+API is RESTful, which means that we implemented:
+
+* Resource based url representations
+* HATEOAS communcation with server
+* Implicit caching with *Last-Modified* and *If-Modified-Since* headers
+* Password role based authorization with oauth2
+* Access token authentication with oauth2
+* Resource protection userType-wise with firewall middleware
+
+For next updates, it is planned to implement explicit caching using **redis database**
+
+## Kafka service
+
+For kafka service, we used KRaft protocol, which enabled us to remove zookeeper from kafka dependencies. That enables better security structure, faster loading times etc etc. Because kafka is needed for logging purposes, we decided to make its architecture as follows (topic design):
+
+* **productLogs** - used for logging events related to product objects
+    * 2 partitions
+    * 2 replicas
+* **skuLogs** - used for sku objects logging
+    * 2 partitions 
+    * 2 replicas
+* **inventoryLogs** - used for sku objects quantityInStock update logging
+    * 5 partitions
+    * 2 replicas
+
+We used 5 partitions on inventory because it is much more frequent operation than other two logging operations.
+
+In order to put concurrence to work, we made multiple consumers with our docker-compose file. Structure of our kafka service with consumers is conceptually shown below:
+
+![drawing](https://github.com/PetrovicArmin/ecommerce-backend/assets/89392479/a09b368f-a588-4940-9186-90bdca66ce8c)
+
+Keep in mind that above is logical representation of the system. Multiple brokers and replication factors make system much more different - implementation-wise, which means much more reliable and efficient system.
 
 
 
