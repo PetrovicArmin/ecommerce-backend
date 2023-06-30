@@ -44,7 +44,7 @@ In order to run **api_service** from terminal, in /api_service folder you need t
 To run **consumer_service** from terminal, in /consumer_service folder you need to run:
 
 * *npm install* - installing all of the dependencies from package.json
-* *npm run dev* - run application with nodemon and tsc - looking for changes, you don't need to restart manually
+* *npm run dev:inventory* or *npm run dev:skuAndProduct* - run application with nodemon and tsc - looking for changes, you don't need to restart manually. There are two different commands because of consumer types. Former lets you create inventory consumer, that will consume events for quantity change in your shop. SkuAndProduct lets you create consumer for consuming manipulation events on product and sku (INSERT, UPDATE, DELETE).
 
 When in development mode, you need to update _docker-compose.yml_ file, in order to remove api and consumer 
 services. They will not bother your development (with localy started api and consumer services), but will take extra space and resources - that's why it's better to update _docker compose_.
@@ -60,7 +60,7 @@ This will bring all of the services defined in docker-compose file to life.
 
 ## Testing API
 
-Import given collections to postman. 
+Import given collections to postman. You can access the api on ${API_PORT} that you provided in .env file. 
 
 Collection _mock-api-postman.json_ enables you to see all of the routes, and mock answers of our api server. This will help you understand better the whole structure before you test it.
 
@@ -88,6 +88,15 @@ So, firstly, with users/CREATE make at least 3 different user types. After that:
 * Read, Update, Delete users - Update & delete are enabled only for user that has token for that account.
 
 Finally, in **logs** folder you can find routes for logging events generated because of all actions that you did above. Make sure that appropriate token (of *SUPPLY_ANALYST*) is provided in authentication header in postman.
+
+
+# Technical documentation summary
+
+## Database 
+
+Database is dockerized, and it is created by appripriate .sql dump file. ER Diagram of our database is showed below:
+
+![database](https://github.com/PetrovicArmin/ecommerce-backend/assets/89392479/1aebde47-8a30-47a8-b790-a9b01e224506)
 
 
 
