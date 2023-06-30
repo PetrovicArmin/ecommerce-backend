@@ -49,6 +49,8 @@ To run **consumer_service** from terminal, in /consumer_service folder you need 
 When in development mode, you need to update _docker-compose.yml_ file, in order to remove api and consumer 
 services. They will not bother your development (with localy started api and consumer services), but will take extra space and resources - that's why it's better to update _docker compose_.
 
+**IMPORTANT** - when you have finished code development, you have to run __npm run build__ in order to build your .js files with typescript compiler. That will enable that **npm run start** within docker files in production use most recent version of your code.
+
 ## Production mode
 When in production mode, whole system can be started by one single command:
 
