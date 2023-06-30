@@ -11,7 +11,7 @@ PG_CONTAINER_NAME="postgres" //defines container name
 POSTGRES_DB="test" //database name
 POSTGRES_USER="armin" //database user
 POSTGRES_PASSWORD="mojasifra" //database password
-POSTGRES_PORT="5500" //localhost port to bind to postgres container
+POSTGRES_PORT="5500" //localhost port to bind to postgres container, useful for debugging with DB clients like DBeaver
 
 API_URL="http://localhost" //if ran on local computer, this is preffered value
 API_PORT="8080" //port on which you can connect to test API (with postman etc.)
@@ -53,10 +53,10 @@ services. They will not bother your development (with localy started api and con
 When in production mode, whole system can be started by one single command:
 
 ```
-    docker compose --env-file ./main.env up
+    docker compose --env-file ./main.env up -d
 ```
 
-This will bring all of the services defined in docker-compose file to life.
+This will bring all of the services defined in docker-compose file to life (in background: -d).
 
 ## Testing API
 
