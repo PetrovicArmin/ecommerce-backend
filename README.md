@@ -134,5 +134,7 @@ In order to put concurrence to work, we made multiple consumers with our docker-
 
 Keep in mind that above is logical representation of the system. Multiple brokers and replication factors make system much more different - implementation-wise, which means much more reliable and efficient system.
 
+## Task breakdown
 
+On [this link](https://etfunsa-my.sharepoint.com/:x:/g/personal/apetrovic1_etf_unsa_ba/ESI0qwYt4oJAuI480CoTUn4Bgk1uaw3atzhr2iDJs420-A?e=JJqiz0) you can find xlsx document with task breakdown. Vertically, it shows bigger tasks (from **database design** to **project documentation**). Horizontally, you can find my task breakdown to smaller tasks (subtasks). 
 
