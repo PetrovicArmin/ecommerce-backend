@@ -52,9 +52,9 @@ services. They will not bother your development (with localy started api and con
 ## Production mode
 When in production mode, whole system can be started by one single command:
 
-'''
+```
     docker compose --env-file ./main.env up
-'''
+```
 
 This will bring all of the services defined in docker-compose file to life.
 
