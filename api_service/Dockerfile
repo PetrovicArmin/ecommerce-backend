@@ -1,7 +1,5 @@
 FROM node:18
 
-
-
 COPY ./main.env ./
 
 WORKDIR /api_service
